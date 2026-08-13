@@ -7,6 +7,7 @@ optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md
 The current data contract is documented in [Data Model](docs/DATA_MODEL.md).
 Source provenance and authority classifications are documented in
 [Source System](docs/SOURCE_SYSTEM.md).
+The offline query modules are described in [Lore Engine](docs/LORE_ENGINE.md).
 
 ## License
 
