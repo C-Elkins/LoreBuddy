@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="assets/logo/lorebuddy-badge.png" alt="LoreBuddy" width="340">
+</p>
+
 # LoreBuddy
+
+> *Your Adventures. Our Stories.*
 
 An open-source contextual lore companion for World of Warcraft and beyond.
 
