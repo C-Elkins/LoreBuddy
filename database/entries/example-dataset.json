@@ -22,7 +22,10 @@
   "sources": [
     {
       "id": "fixture_author_note",
+      "publisher": "LoreBuddy Contributors",
+      "title": "Example fixture author note",
       "kind": "community_contribution",
+      "classification": "community",
       "reference": "database/entries/example-dataset.json",
       "attribution": "LoreBuddy fixture contributors",
       "license": "MIT; fictional test content",

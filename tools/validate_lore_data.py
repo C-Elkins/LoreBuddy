@@ -46,8 +46,10 @@ def validate_dataset(path, vocabulary):
     source_ids = set()
     for source in dataset["sources"]:
         context = f"source {source.get('id', '<missing>')}"
-        for field in ("id", "kind", "reference", "attribution", "license", "verificationStatus"):
+        for field in ("id", "publisher", "title", "kind", "classification", "reference", "attribution", "license", "verificationStatus"):
             require_string(source.get(field), field, context)
+        if source["classification"] not in {"primary", "secondary", "community", "speculation"}:
+            fail(f"{context}: classification must be primary, secondary, community, or speculation")
         if source["id"] in source_ids:
             fail(f"{context}: duplicate id")
         source_ids.add(source["id"])

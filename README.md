@@ -5,6 +5,8 @@ An open-source contextual lore companion for World of Warcraft and beyond.
 Before coding, read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md). For
 optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md).
 The current data contract is documented in [Data Model](docs/DATA_MODEL.md).
+Source provenance and authority classifications are documented in
+[Source System](docs/SOURCE_SYSTEM.md).
 
 ## License
 

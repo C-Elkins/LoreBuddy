@@ -33,9 +33,23 @@ requires it, but authors record one canonical relationship.
 ## Provenance And Uncertainty
 
 Statements and relationships require at least one source ID. A source records
-its kind, reference, attribution, license or usage note, and verification status.
+its publisher, title, kind, authority classification, reference, attribution,
+license or usage note, and verification status. A source may also include a URL.
 Blizzard API metadata can additionally record namespace, region, locale, and
 retrieval time.
+
+`classification` is deliberately separate from `kind`:
+
+- `primary`: official Blizzard or in-game material.
+- `secondary`: reputable references such as Warcraft Wiki or Wowhead.
+- `community`: forums, Reddit, and user discussions.
+- `speculation`: theory or interpretation that is not established canon.
+
+These classifications express authority, not whether a source is useful. A
+secondary source can help locate a primary source, while a community source can
+provide context without becoming authoritative. Statements still carry their
+own `canonStatus` and `epistemicStatus`; a speculative source must not be
+rendered as confirmed fact.
 
 `canonStatus` and `epistemicStatus` are intentionally separate. A confirmed
 source can support an interpretation without turning that interpretation into a
