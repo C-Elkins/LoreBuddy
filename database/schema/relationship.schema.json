@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/relationship.schema.json",
+  "title": "LoreBuddy Relationship",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "subjectId", "predicate", "objectId", "sourceIds"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
+    "subjectId": { "type": "string" },
+    "predicate": { "type": "string" },
+    "objectId": { "type": "string" },
+    "sourceIds": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+    "canonStatus": { "type": "string", "enum": ["confirmed", "disputed", "non_canon", "unknown"] },
+    "epistemicStatus": { "type": "string", "enum": ["fact", "interpretation", "theory", "speculation"] },
+    "discoveryGateIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "context": { "type": "string" }
+  }
+}

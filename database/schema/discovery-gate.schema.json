@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/discovery-gate.schema.json",
+  "title": "LoreBuddy Discovery Gate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "label", "signalType", "minimumDetailLevel"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
+    "label": { "type": "string", "minLength": 1 },
+    "signalType": { "type": "string", "enum": ["quest", "event", "zone", "achievement", "encounter", "manual_confirmation"] },
+    "signalId": { "type": "string" },
+    "minimumDetailLevel": { "type": "string", "enum": ["quick", "story", "deep"] }
+  }
+}

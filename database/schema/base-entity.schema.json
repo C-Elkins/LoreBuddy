@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/base-entity.schema.json",
+  "title": "LoreBuddy Base Entity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "type": {
+      "type": "string",
+      "enum": ["character", "location", "faction", "event", "item", "quest", "creature", "organization", "concept", "book", "dialogue", "dungeon", "raid", "zone"]
+    },
+    "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "summary": { "type": "string", "minLength": 1 },
+    "gameVersions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "status": { "type": "string", "enum": ["active", "retired", "draft"] }
+  }
+}

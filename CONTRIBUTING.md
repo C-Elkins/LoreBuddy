@@ -4,7 +4,8 @@ Thanks for contributing to LoreBuddy.
 
 ## Before You Start
 
-Read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md) before proposing changes.
+Read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md) and [Data Model](docs/DATA_MODEL.md)
+before proposing data or schema changes.
 LoreBuddy is designed to provide contextual, optional, spoiler-aware lore while
 keeping the core addon useful offline.
 

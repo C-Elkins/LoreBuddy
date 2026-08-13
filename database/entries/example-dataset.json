@@ -1,0 +1,72 @@
+{
+  "datasetVersion": 1,
+  "entities": [
+    {
+      "id": "example_wayfinder",
+      "name": "Example Wayfinder",
+      "type": "character",
+      "aliases": ["The Wayfinder"],
+      "summary": "A fictional character used to prove the LoreBuddy data model.",
+      "gameVersions": ["fixture"],
+      "status": "draft"
+    },
+    {
+      "id": "example_waypoint",
+      "name": "Example Waypoint",
+      "type": "location",
+      "summary": "A fictional location used to prove the LoreBuddy data model.",
+      "gameVersions": ["fixture"],
+      "status": "draft"
+    }
+  ],
+  "sources": [
+    {
+      "id": "fixture_author_note",
+      "kind": "community_contribution",
+      "reference": "database/entries/example-dataset.json",
+      "attribution": "LoreBuddy fixture contributors",
+      "license": "MIT; fictional test content",
+      "verificationStatus": "verified"
+    }
+  ],
+  "discoveryGates": [
+    {
+      "id": "fixture_waypoint_discovered",
+      "label": "The player has discovered Example Waypoint",
+      "signalType": "manual_confirmation",
+      "minimumDetailLevel": "story"
+    }
+  ],
+  "statements": [
+    {
+      "id": "example_wayfinder_quick_fact",
+      "entityId": "example_wayfinder",
+      "detailLevel": "quick",
+      "text": "Example Wayfinder is associated with Example Waypoint.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["fixture_author_note"]
+    },
+    {
+      "id": "example_wayfinder_story_interpretation",
+      "entityId": "example_wayfinder",
+      "detailLevel": "story",
+      "text": "The wayfinder may treat the waypoint as a symbol of return.",
+      "canonStatus": "unknown",
+      "epistemicStatus": "interpretation",
+      "sourceIds": ["fixture_author_note"],
+      "discoveryGateIds": ["fixture_waypoint_discovered"]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "example_wayfinder_located_at_waypoint",
+      "subjectId": "example_wayfinder",
+      "predicate": "located_at",
+      "objectId": "example_waypoint",
+      "sourceIds": ["fixture_author_note"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact"
+    }
+  ]
+}

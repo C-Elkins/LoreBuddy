@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/player-discovery-state.schema.json",
+  "title": "LoreBuddy Player Discovery State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "discoveredGateIds", "seenStatementIds", "dismissedHintIds"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "discoveredGateIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "seenStatementIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "dismissedHintIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  }
+}
