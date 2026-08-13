@@ -7,6 +7,8 @@ Thanks for contributing to LoreBuddy.
 Read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md), [Data Model](docs/DATA_MODEL.md),
 and [Source System](docs/SOURCE_SYSTEM.md) before proposing data or schema changes.
 Read [Lore Engine](docs/LORE_ENGINE.md) before changing core query behavior.
+Run `./LoreBuddy validate` before opening a pull request that changes lore data
+or schemas.
 LoreBuddy is designed to provide contextual, optional, spoiler-aware lore while
 keeping the core addon useful offline.
 

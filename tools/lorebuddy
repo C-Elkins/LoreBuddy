@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+case "${1:-}" in
+    validate)
+        shift
+        exec "$(dirname "$0")/validate_lore_data.py" "$@"
+        ;;
+    *)
+        printf '%s\n' "Usage: tools/lorebuddy validate [dataset ...]" >&2
+        exit 2
+        ;;
+esac

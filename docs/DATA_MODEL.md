@@ -74,8 +74,17 @@ Run the offline validator from the repository root:
 ```
 
 The validator checks stable IDs, required provenance, entity references,
-relationship predicates, and discovery-gate references. It intentionally has no
-network or Blizzard credential dependency.
+relationship predicates, discovery-gate references, invalid source types, and
+orphaned entities. It intentionally has no network or Blizzard credential
+dependency. The repository command is:
+
+```sh
+./LoreBuddy validate
+```
+
+Errors make the database invalid and return a non-zero exit code. Warnings, such
+as an entry without a secondary source, are reported without blocking a valid
+database.
 
 Do not add bulk Warcraft lore entries until the schema and source/licensing
 workflow have been reviewed.

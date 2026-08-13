@@ -15,3 +15,7 @@ blizzard-token.json
 *.credentials
 /secrets/
 /config/local/
+
+# Local validation/runtime artifacts
+__pycache__/
+*.pyc
