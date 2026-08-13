@@ -4,3 +4,14 @@
 # Environment files
 .env
 .env.*
+!.env.example
+.envrc
+
+# Blizzard API credentials and local OAuth state
+blizzard-client.json
+blizzard-credentials.json
+blizzard-token.json
+*.secret
+*.credentials
+/secrets/
+/config/local/

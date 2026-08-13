@@ -35,7 +35,10 @@ In the [Blizzard Developer Portal](https://develop.battle.net/access/clients/):
    > and does not expose Blizzard client secrets to players.
 
 7. Create the client and store the client ID and secret in a local secret store
-   or environment variables.
+   or environment variables. Files such as `blizzard-credentials.json` and
+   `blizzard-token.json` are ignored by Git in this repository, but do not rely
+   on ignore rules alone: never include credentials in a CurseForge upload or
+   any addon package.
 
 The portal limits each developer to 50 clients. Create separate clients for
 development and production when the service architecture is ready.
