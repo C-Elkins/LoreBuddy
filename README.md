@@ -2,6 +2,9 @@
 
 An open-source contextual lore companion for World of Warcraft and beyond.
 
+Before coding, read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md). For
+optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md).
+
 ## License
 
 The LoreBuddy software is licensed under the MIT License. See [LICENSE](LICENSE).

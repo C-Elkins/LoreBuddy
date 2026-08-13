@@ -8,6 +8,20 @@ Read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md) before proposing changes.
 LoreBuddy is designed to provide contextual, optional, spoiler-aware lore while
 keeping the core addon useful offline.
 
+## Philosophy Review
+
+Before coding, explain how the proposed change supports the relevant philosophy
+principles. During implementation and review, check that it:
+
+- Adds context without overwhelming the player.
+- Keeps lore optional and respects the player's discovery history.
+- Avoids unnecessary spoilers and distinguishes fact from interpretation.
+- Preserves provenance for every lore entry or external source.
+- Keeps the core addon functional without an internet connection.
+- Treats AI as an optional explanation layer, never as the source of truth.
+
+Record any deliberate tradeoff in the issue or pull request description.
+
 ## What to Contribute
 
 - Code, tests, and documentation that improve the core experience.
