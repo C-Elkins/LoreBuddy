@@ -1,0 +1,24 @@
+## Interface: 20506
+## Title: LoreBuddy
+## Notes: An optional, contextual, offline-first lore companion for Burning Crusade Classic Anniversary.
+## Author: LoreBuddy Contributors
+## Version: 0.1.0-dev
+## Category: Information
+## AllowLoadGameType: tbc
+## SavedVariablesPerCharacter: LoreBuddyCharacterState
+
+# Provisional until verified in the installed TBC Anniversary client.
+# Verify with: /dump select(4, GetBuildInfo())
+
+core/EntityManager.lua
+core/RelationshipManager.lua
+core/SourceManager.lua
+core/DiscoveryManager.lua
+core/SearchEngine.lua
+core/ContextEngine.lua
+core/ValidationEngine.lua
+core/LoreEngine.lua
+addon/ContextCollector.lua
+addon/DiscoverySignalAdapter.lua
+addon/EventRouter.lua
+addon/Bootstrap.lua

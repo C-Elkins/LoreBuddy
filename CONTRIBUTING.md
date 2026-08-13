@@ -9,6 +9,8 @@ and [Source System](docs/SOURCE_SYSTEM.md) before proposing data or schema chang
 Read [Lore Engine](docs/LORE_ENGINE.md) before changing core query behavior.
 Run `./LoreBuddy validate` before opening a pull request that changes lore data
 or schemas.
+Addon changes must preserve the TBC Anniversary target and keep direct WoW API
+calls inside `addon/`, outside the client-neutral `core/` engine.
 LoreBuddy is designed to provide contextual, optional, spoiler-aware lore while
 keeping the core addon useful offline.
 

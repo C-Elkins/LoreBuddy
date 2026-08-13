@@ -19,3 +19,6 @@ blizzard-token.json
 # Local validation/runtime artifacts
 __pycache__/
 *.pyc
+
+# Local addon packaging output
+/build/

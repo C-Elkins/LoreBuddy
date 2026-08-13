@@ -10,6 +10,7 @@ Source provenance and authority classifications are documented in
 The offline query modules are described in [Lore Engine](docs/LORE_ENGINE.md).
 Run `./LoreBuddy validate` to check the database before adding or packaging
 content.
+The initial addon target is documented in [TBC Anniversary Compatibility](docs/TBC_ANNIVERSARY_COMPATIBILITY.md).
 
 ## License
 
