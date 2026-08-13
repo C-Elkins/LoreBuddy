@@ -57,6 +57,26 @@ curl -u "$BLIZZARD_CLIENT_ID:$BLIZZARD_CLIENT_SECRET" \
   https://oauth.battle.net/token
 ```
 
+For local development, copy `.env.example` to `.env.local`, fill in the
+rotated credentials locally, and load those variables into your shell. The
+repository includes `tools/blizzard_api_request.sh` to perform the token flow
+and make one authenticated GET request without placing credentials in addon
+code.
+
+The helper requires `curl` and `jq`. For example:
+
+```sh
+set -a
+. ./.env.local
+set +a
+./tools/blizzard_api_request.sh
+```
+
+Set `BLIZZARD_API_PATH`, `BLIZZARD_NAMESPACE`, `BLIZZARD_REGION`, and
+`BLIZZARD_LOCALE` to the values documented for the specific WoW Classic/TBC
+resource before making a request. The default token endpoint in the example is
+only a connectivity check; it does not establish the correct TBC namespace.
+
 Use the returned token only from the trusted service:
 
 ```sh
