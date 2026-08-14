@@ -119,10 +119,11 @@ function Addon.start()
     _G.LoreBuddyCharacterState = state
 
     Addon.personality = Addon.Personality.new(state)
+    Addon.settings = Addon.LoreBuddySettings.new(engine, state)
+    Addon.settings:registerInterfaceOptions()
     Addon.indicator = Addon.LoreBuddyIndicator.new(state, function()
         Addon.journal:toggle()
     end)
-    Addon.settings = Addon.LoreBuddySettings.new(engine, state)
     Addon.journal = Addon.LoreBuddyJournal.new(engine, Addon.personality, state, function()
         Addon.settings:toggle()
     end)
@@ -166,6 +167,8 @@ function Addon.start()
         SlashCmdList["LOREBUDDY"] = function(msg)
             if msg == "test" then
                 Addon.testChamber:toggle()
+            elseif msg == "settings" then
+                Addon.settings:toggle()
             else
                 Addon.journal:toggle()
             end

@@ -23,5 +23,8 @@ __pycache__/
 # Local addon packaging output
 /build/
 
+# Local addon copies used for UI review
+/TEST ADDONS/
+
 # Source sheets stay local; extracted assets are committed
 /assets/source/

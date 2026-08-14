@@ -6,9 +6,13 @@ local Theme = LoreBuddyCore.Addon.Theme
 local LoreBuddyTestChamber = {}
 LoreBuddyTestChamber.__index = LoreBuddyTestChamber
 
+local function isPlaceholderEntity(entity)
+    return not entity or string.sub(entity.id or "", 1, 7) == "sample_" or string.sub(entity.name or "", 1, 8) == "[Sample]"
+end
+
 local function firstEntityOfType(engine, entityType)
     for _, entity in ipairs(engine.dataset.entities or {}) do
-        if entity.type == entityType then
+        if entity.type == entityType and not isPlaceholderEntity(entity) then
             return entity
         end
     end
@@ -16,7 +20,14 @@ local function firstEntityOfType(engine, entityType)
 end
 
 local function firstRelationship(engine)
-    return engine.dataset.relationships and engine.dataset.relationships[1] or nil
+    for _, relationship in ipairs(engine.dataset.relationships or {}) do
+        local subject = engine.entities:get(relationship.subjectId)
+        local object = engine.entities:get(relationship.objectId)
+        if subject and object and not isPlaceholderEntity(subject) and not isPlaceholderEntity(object) then
+            return relationship
+        end
+    end
+    return nil
 end
 
 -- /lorebuddy test: a developer-only panel to manually trigger every UI
@@ -74,7 +85,7 @@ function LoreBuddyTestChamber:testPopup(entityType)
         return
     end
     if self.indicator then self.indicator:showGlow() end
-    self.popup:show(entity, nil, "This is a test popup triggered from the Test Chamber.")
+    self.popup:show(entity, nil, "A test discovery from the Lore Buddy chamber: " .. entity.name .. " is a real in-world lore anchor and works as a prototype prompt.")
 end
 
 function LoreBuddyTestChamber:testConnection()
@@ -88,7 +99,7 @@ function LoreBuddyTestChamber:testConnection()
         return
     end
     if self.indicator then self.indicator:showGlow() end
-    self.popup:show(subject, object, "You've encountered both of these. Here's a test connection.")
+    self.popup:show(subject, object, "Connection test: " .. subject.name .. " and " .. object.name .. " are linked in the dataset, which makes this a realistic lore relationship prompt.")
 end
 
 function LoreBuddyTestChamber:testDeepDive()

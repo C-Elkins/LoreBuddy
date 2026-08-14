@@ -23,10 +23,8 @@ function LoreBuddyIndicator.new(state, onClick)
 
     local portrait = frame:CreateTexture(nil, "ARTWORK")
     portrait:SetPoint("CENTER")
-    portrait:SetSize(28, 28)
-    if portrait.SetTexture then
-        portrait:SetTexture("Interface/AddOns/LoreBuddy/Media/portrait.png")
-    end
+    portrait:SetSize(34, 35)
+    Theme.setTexture(portrait, Theme.media.indicator)
 
     local glow = frame:CreateTexture(nil, "OVERLAY")
     glow:SetPoint("CENTER")
@@ -42,6 +40,7 @@ function LoreBuddyIndicator.new(state, onClick)
     end)
 
     self.frame = frame
+    self.portrait = portrait
     self.glow = glow
     return self
 end

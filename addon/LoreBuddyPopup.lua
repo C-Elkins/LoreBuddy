@@ -7,19 +7,19 @@ local LoreBuddyPopup = {}
 LoreBuddyPopup.__index = LoreBuddyPopup
 
 local TYPE_META = {
-    character = { icon = "\240\159\147\150", label = "CHARACTER" },
-    creature = { icon = "\240\159\147\150", label = "CHARACTER" },
-    location = { icon = "\240\159\147\141", label = "LOCATION" },
-    zone = { icon = "\240\159\147\141", label = "LOCATION" },
-    dungeon = { icon = "\240\159\147\141", label = "LOCATION" },
-    raid = { icon = "\240\159\147\141", label = "LOCATION" },
-    event = { icon = "\240\159\147\156", label = "EVENT" },
-    faction = { icon = "\240\159\155\161", label = "FACTION" },
-    organization = { icon = "\240\159\155\161", label = "FACTION" },
-    item = { icon = "\240\159\151\161", label = "ITEM" },
-    quest = { icon = "\226\157\148", label = "QUEST" }
+    character = { icon = "Interface/Icons/Achievement_Character_Human_Male", label = "CHARACTER" },
+    creature = { icon = "Interface/Icons/Ability_Hunter_BeastCall", label = "CREATURE" },
+    location = { icon = "Interface/Icons/INV_Misc_Map_01", label = "LOCATION" },
+    zone = { icon = "Interface/Icons/INV_Misc_Map_01", label = "LOCATION" },
+    dungeon = { icon = "Interface/Icons/Spell_Holy_SymbolOfHope", label = "DUNGEON" },
+    raid = { icon = "Interface/Icons/INV_Misc_Coin_09", label = "RAID" },
+    event = { icon = "Interface/Icons/INV_Misc_PocketWatch_01", label = "EVENT" },
+    faction = { icon = "Interface/Icons/INV_Misc_GroupLooking", label = "FACTION" },
+    organization = { icon = "Interface/Icons/INV_Misc_GroupLooking", label = "FACTION" },
+    item = { icon = "Interface/Icons/INV_Misc_Book_09", label = "ITEM" },
+    quest = { icon = "Interface/Icons/INV_Misc_Note_02", label = "QUEST" }
 }
-local DEFAULT_META = { icon = "\240\159\147\150", label = "LORE" }
+local DEFAULT_META = { icon = "Interface/Icons/INV_Misc_Book_09", label = "LORE" }
 
 -- The main gameplay UI: a small parchment card that tempts rather than
 -- lectures. Never covers the center of the screen by default; draggable,
@@ -40,9 +40,11 @@ function LoreBuddyPopup.new(state, onRead, onLater)
     local portrait = frame:CreateTexture(nil, "ARTWORK")
     portrait:SetSize(36, 36)
     portrait:SetPoint("TOPLEFT", 10, -10)
-    if portrait.SetTexture then
-        portrait:SetTexture("Interface/AddOns/LoreBuddy/Media/portrait.png")
-    end
+    Theme.setTexture(portrait, Theme.media.indicator)
+
+    local typeIcon = frame:CreateTexture(nil, "ARTWORK")
+    typeIcon:SetSize(16, 16)
+    typeIcon:SetPoint("TOPLEFT", portrait, "BOTTOMLEFT", 0, -7)
 
     local header = frame:CreateFontString(nil, "OVERLAY", Theme.fonts.heading)
     header:SetPoint("TOPLEFT", portrait, "TOPRIGHT", 8, -2)
@@ -105,6 +107,7 @@ function LoreBuddyPopup.new(state, onRead, onLater)
     end)
 
     self.frame = frame
+    self.typeIcon = typeIcon
     self.typeLine = typeLine
     self.nameLine = nameLine
     self.connectionLine = connectionLine
@@ -120,10 +123,11 @@ function LoreBuddyPopup:show(entity, connectionEntity, text)
     end
     self.currentEntity = entity
     local meta = TYPE_META[entity.type] or DEFAULT_META
-    self.typeLine:SetText(meta.icon .. " " .. meta.label)
+    Theme.setTexture(self.typeIcon, meta.icon)
+    self.typeLine:SetText(meta.label)
     self.nameLine:SetText(entity.name)
     if connectionEntity then
-        self.connectionLine:SetText("\240\159\148\151 CONNECTION: " .. connectionEntity.name)
+        self.connectionLine:SetText("CONNECTION: " .. connectionEntity.name)
     else
         self.connectionLine:SetText("")
     end

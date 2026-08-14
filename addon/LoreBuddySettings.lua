@@ -8,6 +8,26 @@ LoreBuddySettings.__index = LoreBuddySettings
 
 local SPOILER_OPTIONS = { "no_spoilers", "context_only", "moderate", "full_lore", "show_everything" }
 
+local function setControlsFromState(self)
+    if not self.frame or not self.engine then
+        return
+    end
+
+    local spoilerValue = self.engine.discovery.state.spoilerPreference or "moderate"
+    local spoilLabel = self.spoilerLabel
+    if spoilLabel then
+        spoilLabel:SetText("Spoiler level: " .. spoilerValue)
+    end
+
+    if self.combatCheck then
+        self.combatCheck:SetChecked(self.state.suppressInCombat ~= false)
+    end
+
+    if self.mascotCheck then
+        self.mascotCheck:SetChecked(self.state.mascotEnabled ~= false)
+    end
+end
+
 -- Basic settings panel (first milestone scope only): spoiler level, combat
 -- suppression, and mascot enable. Reads/writes engine.discovery.state and
 -- the shared character-state table directly; no lore data lives here.
@@ -37,8 +57,8 @@ function LoreBuddySettings.new(engine, state)
 
     local spoilerLabel = frame:CreateFontString(nil, "OVERLAY", Theme.fonts.body)
     spoilerLabel:SetPoint("TOPLEFT", 14, -40)
-    spoilerLabel:SetText("Spoiler level: " .. (engine.discovery.state.spoilerPreference or "moderate"))
     Theme.styleBody(spoilerLabel)
+    self.spoilerLabel = spoilerLabel
 
     local spoilerButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
     spoilerButton:SetSize(120, 22)
@@ -57,7 +77,7 @@ function LoreBuddySettings.new(engine, state)
 
     local combatCheck = CreateFrame("CheckButton", nil, frame, "UICheckButtonTemplate")
     combatCheck:SetPoint("TOPLEFT", spoilerButton, "BOTTOMLEFT", 0, -14)
-    combatCheck:SetChecked(state.suppressInCombat ~= false)
+    self.combatCheck = combatCheck
     combatCheck:SetScript("OnClick", function(checkbox)
         state.suppressInCombat = checkbox:GetChecked() and true or false
     end)
@@ -68,7 +88,7 @@ function LoreBuddySettings.new(engine, state)
 
     local mascotCheck = CreateFrame("CheckButton", nil, frame, "UICheckButtonTemplate")
     mascotCheck:SetPoint("TOPLEFT", combatCheck, "BOTTOMLEFT", 0, -6)
-    mascotCheck:SetChecked(state.mascotEnabled ~= false)
+    self.mascotCheck = mascotCheck
     mascotCheck:SetScript("OnClick", function(checkbox)
         state.mascotEnabled = checkbox:GetChecked() and true or false
     end)
@@ -78,7 +98,57 @@ function LoreBuddySettings.new(engine, state)
     Theme.styleBody(mascotLabel)
 
     self.frame = frame
+    setControlsFromState(self)
     return self
+end
+
+function LoreBuddySettings:registerInterfaceOptions()
+    local addCategory = _G["InterfaceOptions_AddCategory"]
+    if not addCategory then
+        return
+    end
+
+    local panel = CreateFrame("Frame", "LoreBuddyInterfaceOptions")
+    panel.name = "LoreBuddy"
+    panel.parent = "AddOns"
+
+    local title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+    title:SetPoint("TOPLEFT", 16, -16)
+    title:SetText("Lore Buddy")
+
+    local icon = panel:CreateTexture(nil, "ARTWORK")
+    icon:SetPoint("TOPRIGHT", -16, -12)
+    icon:SetSize(28, 28)
+    Theme.setTexture(icon, Theme.media.indicator)
+
+    local summary = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    summary:SetPoint("TOPLEFT", 16, -52)
+    summary:SetPoint("RIGHT", -16, 0)
+    summary:SetText("Quiet lore discovery, optional settings, and compatibility-safe UI defaults for TBC Anniversary.")
+    summary:SetJustifyH("LEFT")
+
+    local check = CreateFrame("CheckButton", nil, panel, "OptionsCheckButtonTemplate")
+    check:SetPoint("TOPLEFT", 16, -110)
+    check:SetChecked(self.state.suppressInCombat ~= false)
+    check:SetScript("OnClick", function(checkbox)
+        self.state.suppressInCombat = checkbox:GetChecked() and true or false
+    end)
+    _G[check:GetName() .. "Text"]:SetText("Suppress popups in combat")
+
+    local mascot = CreateFrame("CheckButton", nil, panel, "OptionsCheckButtonTemplate")
+    mascot:SetPoint("TOPLEFT", 16, -150)
+    mascot:SetChecked(self.state.mascotEnabled ~= false)
+    mascot:SetScript("OnClick", function(checkbox)
+        self.state.mascotEnabled = checkbox:GetChecked() and true or false
+    end)
+    _G[mascot:GetName() .. "Text"]:SetText("Show mascot indicator")
+
+    panel.okay = function() end
+    panel.cancel = function() end
+    panel.default = function() end
+
+    addCategory(panel)
+    self.interfacePanel = panel
 end
 
 function LoreBuddySettings:toggle()

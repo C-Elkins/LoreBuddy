@@ -7,6 +7,12 @@ LoreBuddyCore.Addon = LoreBuddyCore.Addon or {}
 -- place. No UI is created here; this is just shared constants/helpers.
 local Theme = {}
 
+Theme.media = {
+    portrait = "Interface/AddOns/LoreBuddy/Media/portrait.png",
+    indicator = "Interface/AddOns/LoreBuddy/Media/lorebuddy-indicator.png",
+    header = "Interface/AddOns/LoreBuddy/Media/lorebuddy-header.png",
+}
+
 Theme.colors = {
     gold = { 0.83, 0.68, 0.21 },
     parchment = { 0.90, 0.82, 0.65 },
@@ -46,6 +52,12 @@ end
 
 function Theme.styleBody(fontString)
     fontString:SetTextColor(Theme.colors.parchment[1], Theme.colors.parchment[2], Theme.colors.parchment[3])
+end
+
+function Theme.setTexture(texture, path)
+    if texture and texture.SetTexture then
+        texture:SetTexture(path)
+    end
 end
 
 -- Short fade in/out; falls back to an instant show/hide outside WoW or when
