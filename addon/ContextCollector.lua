@@ -11,8 +11,8 @@ end
 
 function ContextCollector:collect()
     local context = { state = "known" }
-    if GetBestMapForUnit then
-        context.uiMapId = GetBestMapForUnit("player")
+    if C_Map and C_Map.GetBestMapForUnit then
+        context.uiMapId = C_Map.GetBestMapForUnit("player")
     end
     if GetRealZoneText then
         context.zoneName = GetRealZoneText()
