@@ -70,6 +70,16 @@ It builds Wowhead, Warcraft Wiki, and WoWDB reference links for a search term
 and can create a draft entry with those sources attached. It never scrapes or
 copies third-party prose; write lore text yourself and cite the sources.
 
+Browse the lore graph without WoW running with the explorer:
+
+```sh
+./LoreBuddy explore
+```
+
+It merges every dataset in `database/entries/`, lets you click through
+connections and locations to jump the graph, and includes an "Allow spoilers"
+toggle to test discovery gating on real content.
+
 Before coding, read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md). For
 optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md).
 The current data contract is documented in [Data Model](docs/DATA_MODEL.md).

@@ -213,6 +213,7 @@ class AuthorApp(tk.Tk):
 
         tk.Button(left, text="+ NEW ENTRY", command=self._new_entity).pack(fill="x", pady=(6, 0))
         tk.Button(left, text="\U0001F50E Research", command=self._open_research).pack(fill="x", pady=(4, 0))
+        tk.Button(left, text="\U0001F5FA Explore", command=self._open_explorer).pack(fill="x", pady=(4, 0))
         self.status_label = tk.Label(left, text="", wraplength=240, justify="left", fg="#2e7d32")
         self.status_label.pack(fill="x", pady=(8, 0))
 
@@ -374,6 +375,13 @@ class AuthorApp(tk.Tk):
 
         subprocess.Popen(
             [sys.executable, str(Path(__file__).resolve().parent / "lorebuddy_research.py"), str(self.dataset_path)]
+        )
+
+    def _open_explorer(self):
+        import subprocess
+
+        subprocess.Popen(
+            [sys.executable, str(Path(__file__).resolve().parent / "lorebuddy_explorer.py"), str(self.dataset_path)]
         )
 
     def _clear_detail_panel(self):
