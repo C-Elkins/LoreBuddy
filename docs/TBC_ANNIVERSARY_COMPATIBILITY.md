@@ -55,5 +55,10 @@ ignored by Git.
 - [Gethe WoW UI source](https://github.com/Gethe/wow-ui-source)
 - [World of Warcraft API](https://warcraft.wiki.gg/wiki/World_of_Warcraft_API)
 
+The Gethe mirror is a git mirror of Blizzard's shipped FrameXML/Lua UI source.
+Use it to confirm whether a global or namespaced API (for example,
+`C_Map.GetBestMapForUnit`) actually exists for the target client build before
+relying on editor linting alone.
+
 This document records compatibility evidence only. It does not grant rights to
 Blizzard software, UI source, lore, artwork, or trademarks.

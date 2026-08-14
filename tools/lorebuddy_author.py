@@ -212,6 +212,7 @@ class AuthorApp(tk.Tk):
         self.entity_listbox.bind("<<ListboxSelect>>", self._on_select_entity)
 
         tk.Button(left, text="+ NEW ENTRY", command=self._new_entity).pack(fill="x", pady=(6, 0))
+        tk.Button(left, text="\U0001F50E Research", command=self._open_research).pack(fill="x", pady=(4, 0))
         self.status_label = tk.Label(left, text="", wraplength=240, justify="left", fg="#2e7d32")
         self.status_label.pack(fill="x", pady=(8, 0))
 
@@ -367,6 +368,13 @@ class AuthorApp(tk.Tk):
         self.current_entity_id = None
         self._clear_detail_panel()
         self.name_var.set("New Entry")
+
+    def _open_research(self):
+        import subprocess
+
+        subprocess.Popen(
+            [sys.executable, str(Path(__file__).resolve().parent / "lorebuddy_research.py"), str(self.dataset_path)]
+        )
 
     def _clear_detail_panel(self):
         self.current_sources = set()

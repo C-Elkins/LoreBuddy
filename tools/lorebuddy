@@ -11,8 +11,12 @@ case "${1:-}" in
         shift
         exec python3 "$(dirname "$0")/lorebuddy_author.py" "$@"
         ;;
+    research)
+        shift
+        exec python3 "$(dirname "$0")/lorebuddy_research.py" "$@"
+        ;;
     *)
-        printf '%s\n' "Usage: tools/lorebuddy validate|author [dataset]" >&2
+        printf '%s\n' "Usage: tools/lorebuddy validate|author|research [dataset]" >&2
         exit 2
         ;;
 esac
