@@ -32,7 +32,8 @@ function Addon.initialize(dataset, discoveryState)
     if not LoreBuddyCore.LoreEngine then
         return nil, "LoreBuddy core modules are not loaded"
     end
-    local engine = LoreBuddyCore.LoreEngine.new(dataset or {}, discoveryState or LoreBuddyCharacterState)
+    ---@diagnostic disable-next-line: undefined-field
+    local engine = LoreBuddyCore.LoreEngine.new(dataset or {}, discoveryState or _G.LoreBuddyCharacterState)
     Addon.clientContext = context
     Addon.engine = engine
     return engine
