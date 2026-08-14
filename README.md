@@ -1,4 +1,4 @@
-<p align="right">
+<p align="center">
   <img src="assets/logo/lorebuddy-portrait.png" alt="LoreBuddy orc reading a lore book" width="300">
 </p>
 
