@@ -76,7 +76,10 @@ def check_unique_ids(records, label, report, global_ids):
             global_ids.add(record_id)
 
 
-def validate_dataset(path, vocabulary):
+def validate_dataset(path, vocabulary, external_entity_ids=None, external_source_ids=None, external_gate_ids=None):
+    external_entity_ids = external_entity_ids or set()
+    external_source_ids = external_source_ids or set()
+    external_gate_ids = external_gate_ids or set()
     report = {
         "path": str(path),
         "counts": {"entities": 0, "relationships": 0, "sources": 0},
@@ -116,6 +119,12 @@ def validate_dataset(path, vocabulary):
     entity_ids = {record.get("id") for record in collections["entities"] if isinstance(record, dict) and record.get("id")}
     source_ids = {record.get("id") for record in collections["sources"] if isinstance(record, dict) and record.get("id")}
     gate_ids = {record.get("id") for record in collections["discoveryGates"] if isinstance(record, dict) and record.get("id")}
+    # Other already-loaded dataset files may legitimately define entities,
+    # sources, or gates that this file's statements/relationships reference
+    # (e.g. a new tier connecting to an existing zone or character).
+    known_entity_ids = entity_ids | external_entity_ids
+    known_source_ids = source_ids | external_source_ids
+    known_gate_ids = gate_ids | external_gate_ids
     referenced_entity_ids = set()
 
     for entity in collections["entities"]:
@@ -151,7 +160,7 @@ def validate_dataset(path, vocabulary):
             require_string(statement.get(field), field, context, report)
         require_list(statement.get("sourceIds"), "sourceIds", context, report, minimum=1)
         entity_id = statement.get("entityId")
-        if entity_id not in entity_ids:
+        if entity_id not in known_entity_ids:
             add_error(report, f"{context}: broken entity reference '{entity_id}'")
         else:
             referenced_entity_ids.add(entity_id)
@@ -162,10 +171,10 @@ def validate_dataset(path, vocabulary):
         if statement.get("epistemicStatus") not in EPISTEMIC_STATUSES:
             add_error(report, f"{context}: invalid epistemic status '{statement.get('epistemicStatus')}'")
         for source_id in statement.get("sourceIds") or []:
-            if source_id not in source_ids:
+            if source_id not in known_source_ids:
                 add_error(report, f"{context}: missing source reference '{source_id}'")
         for gate_id in statement.get("discoveryGateIds") or []:
-            if gate_id not in gate_ids:
+            if gate_id not in known_gate_ids:
                 add_error(report, f"{context}: broken discovery gate reference '{gate_id}'")
 
     for relationship in collections["relationships"]:
@@ -175,16 +184,16 @@ def validate_dataset(path, vocabulary):
         require_list(relationship.get("sourceIds"), "sourceIds", context, report, minimum=1)
         subject_id = relationship.get("subjectId")
         object_id = relationship.get("objectId")
-        if subject_id not in entity_ids or object_id not in entity_ids:
+        if subject_id not in known_entity_ids or object_id not in known_entity_ids:
             add_error(report, f"{context}: broken entity reference")
         referenced_entity_ids.update({subject_id, object_id} & entity_ids)
         if relationship.get("predicate") not in vocabulary:
             add_error(report, f"{context}: invalid relationship '{relationship.get('predicate')}'")
         for source_id in relationship.get("sourceIds") or []:
-            if source_id not in source_ids:
+            if source_id not in known_source_ids:
                 add_error(report, f"{context}: missing source reference '{source_id}'")
         for gate_id in relationship.get("discoveryGateIds") or []:
-            if gate_id not in gate_ids:
+            if gate_id not in known_gate_ids:
                 add_error(report, f"{context}: broken discovery gate reference '{gate_id}'")
 
     for entity in collections["entities"]:
@@ -207,9 +216,10 @@ def validate_dataset(path, vocabulary):
     return report
 
 
-def print_report(reports):
+def print_report(reports, cross_file_errors=None):
+    cross_file_errors = cross_file_errors or []
     totals = {key: sum(report["counts"][key] for report in reports) for key in ("entities", "relationships", "sources")}
-    errors = [message for report in reports for message in report["errors"]]
+    errors = list(cross_file_errors) + [message for report in reports for message in report["errors"]]
     warnings = [message for report in reports for message in report["warnings"]]
     print("LORE BUDDY DATABASE VALIDATION")
     print()
@@ -232,6 +242,24 @@ def print_report(reports):
     return 1 if errors else 0
 
 
+def find_cross_file_duplicates(raw_datasets):
+    """Detect the same ID accidentally defined in more than one dataset file."""
+    seen = {}
+    duplicates = []
+    for path, dataset in raw_datasets:
+        for field in ("entities", "sources", "discoveryGates", "statements", "relationships"):
+            for record in dataset.get(field) or []:
+                if not (isinstance(record, dict) and record.get("id")):
+                    continue
+                record_id = record["id"]
+                previous_path = seen.get(record_id)
+                if previous_path and previous_path != path:
+                    duplicates.append(f"ID '{record_id}' is defined in both {previous_path} and {path}")
+                else:
+                    seen[record_id] = path
+    return duplicates
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Validate LoreBuddy JSON datasets")
     parser.add_argument("paths", nargs="*", type=Path, help="dataset files; defaults to database/entries/*-dataset.json")
@@ -239,11 +267,29 @@ def main(argv=None):
     try:
         vocabulary = load_json(VOCABULARY_PATH)["relationships"]
         paths = args.paths or sorted((ROOT / "database" / "entries").glob("*-dataset.json"))
-        reports = [validate_dataset(path, vocabulary) for path in paths]
+        raw_datasets = [(path, load_json(path)) for path in paths]
+
+        global_entity_ids, global_source_ids, global_gate_ids = set(), set(), set()
+        for _, dataset in raw_datasets:
+            for entity in dataset.get("entities") or []:
+                if isinstance(entity, dict) and entity.get("id"):
+                    global_entity_ids.add(entity["id"])
+            for source in dataset.get("sources") or []:
+                if isinstance(source, dict) and source.get("id"):
+                    global_source_ids.add(source["id"])
+            for gate in dataset.get("discoveryGates") or []:
+                if isinstance(gate, dict) and gate.get("id"):
+                    global_gate_ids.add(gate["id"])
+
+        cross_file_errors = find_cross_file_duplicates(raw_datasets)
+        reports = [
+            validate_dataset(path, vocabulary, global_entity_ids, global_source_ids, global_gate_ids)
+            for path, _ in raw_datasets
+        ]
     except (OSError, json.JSONDecodeError, KeyError) as error:
         print(f"invalid: {error}", file=sys.stderr)
         return 1
-    return print_report(reports)
+    return print_report(reports, cross_file_errors)
 
 
 if __name__ == "__main__":
