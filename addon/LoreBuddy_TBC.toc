@@ -19,7 +19,11 @@ core/SearchEngine.lua
 core/ContextEngine.lua
 core/ValidationEngine.lua
 core/LoreEngine.lua
+core/GeneratedDataset.lua
 addon/ContextCollector.lua
 addon/DiscoverySignalAdapter.lua
 addon/EventRouter.lua
+addon/LorePopup.lua
+addon/LoreWindow.lua
 addon/Bootstrap.lua
+addon/LoreBuddy.lua

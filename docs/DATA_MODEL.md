@@ -71,6 +71,11 @@ player has already encountered (`discoveredCharacters`, `discoveredLocations`,
 (`seenLore`). It powers messages such as "You've encountered this character
 before." and lives in the same per-character save data as discovery gates.
 
+WoW addons cannot parse JSON at runtime, so `core/GeneratedDataset.lua` is a
+committed, generated Lua table built from every `database/entries/*.json`
+file. Run `tools/generate_lua_dataset.py` after editing any dataset; the
+packaging script also regenerates it automatically when Python is available.
+
 ## Validation
 
 Run the offline validator from the repository root:

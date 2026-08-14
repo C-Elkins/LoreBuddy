@@ -24,6 +24,15 @@ function ContextCollector:collect()
         context.targetName = UnitName("target")
         context.targetGuid = UnitGUID("target")
     end
+    if C_QuestLog and C_QuestLog.GetNumQuestLogEntries then
+        context.questNames = {}
+        for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+            local info = C_QuestLog.GetInfo(i)
+            if info and not info.isHeader then
+                table.insert(context.questNames, info.title)
+            end
+        end
+    end
     self.state = "known"
     self.lastContext = context
     return context
