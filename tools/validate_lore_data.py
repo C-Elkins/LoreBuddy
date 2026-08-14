@@ -24,6 +24,16 @@ CANON_STATUSES = {"confirmed", "disputed", "non_canon", "unknown"}
 EPISTEMIC_STATUSES = {"fact", "interpretation", "theory", "speculation"}
 SIGNAL_TYPES = {"quest", "event", "zone", "achievement", "encounter", "manual_confirmation"}
 
+# Sorted list variants for UI dropdowns and other ordered presentation needs.
+ENTITY_TYPES_LIST = sorted(ENTITY_TYPES)
+SOURCE_KINDS_LIST = sorted(SOURCE_KINDS)
+SOURCE_CLASSIFICATIONS_LIST = sorted(SOURCE_CLASSIFICATIONS)
+VERIFICATION_STATUSES_LIST = sorted(VERIFICATION_STATUSES)
+DETAIL_LEVELS_LIST = sorted(DETAIL_LEVELS)
+CANON_STATUSES_LIST = sorted(CANON_STATUSES)
+EPISTEMIC_STATUSES_LIST = sorted(EPISTEMIC_STATUSES)
+SIGNAL_TYPES_LIST = sorted(SIGNAL_TYPES)
+
 
 def load_json(path):
     with path.open() as handle:

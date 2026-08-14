@@ -50,6 +50,16 @@ packaged `Core/` and `Addon/` Lua files. See the project documents below for
 the data model, source rules, compatibility evidence, and optional Blizzard
 API setup.
 
+Author and edit lore entries with the GUI authoring tool:
+
+```sh
+./LoreBuddy author
+```
+
+It opens a searchable entity list plus a detail editor for type, canon status,
+quick/story/deep text, connections, and sources, and validates the dataset on
+every save.
+
 Before coding, read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md). For
 optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md).
 The current data contract is documented in [Data Model](docs/DATA_MODEL.md).
