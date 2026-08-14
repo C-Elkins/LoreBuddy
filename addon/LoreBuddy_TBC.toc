@@ -24,9 +24,12 @@ core/GeneratedVocabulary.lua
 addon/ContextCollector.lua
 addon/DiscoverySignalAdapter.lua
 addon/EventRouter.lua
-addon/LorePopup.lua
-addon/LoreWindow.lua
+addon/LoreBuddyTheme.lua
+addon/LoreBuddyIndicator.lua
+addon/LoreBuddyPopup.lua
+addon/LoreBuddyJournal.lua
+addon/LoreBuddySettings.lua
+addon/LoreBuddyTestChamber.lua
 addon/Personality.lua
-addon/DiscoveryToast.lua
 addon/Bootstrap.lua
 addon/LoreBuddy.lua

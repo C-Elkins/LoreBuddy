@@ -2,8 +2,9 @@ local LoreBuddyCore = _G.LoreBuddyCore or {}
 _G.LoreBuddyCore = LoreBuddyCore
 
 LoreBuddyCore.Addon = LoreBuddyCore.Addon or {}
-local LoreWindow = {}
-LoreWindow.__index = LoreWindow
+local Theme = LoreBuddyCore.Addon.Theme
+local LoreBuddyJournal = {}
+LoreBuddyJournal.__index = LoreBuddyJournal
 
 local MAX_RESULTS = 8
 local DETAIL_LEVEL_ORDER = { quick = 1, story = 2, deep = 3 }
@@ -11,39 +12,38 @@ local DETAIL_LEVEL_ORDER = { quick = 1, story = 2, deep = 3 }
 -- Encyclopedia Mode: quick-level summary for the selected entity.
 -- Deep Dive Mode: every currently unlocked statement (quick/story/deep),
 -- still respecting discovery gates -- never a spoiler shortcut.
-function LoreWindow.new(engine, personality)
-    local self = setmetatable({ engine = engine, personality = personality, mode = "encyclopedia", rows = {} }, LoreWindow)
+-- Long-form text lives in a real ScrollFrame, not a fixed FontString, so it
+-- can grow past the visible window instead of clipping.
+function LoreBuddyJournal.new(engine, personality, state, onOpenSettings)
+    local self = setmetatable({ engine = engine, personality = personality, mode = "encyclopedia", rows = {} }, LoreBuddyJournal)
     if not CreateFrame then
         return self -- outside WoW (e.g. Lua tests); UI stays inert
     end
 
-    local frame = CreateFrame("Frame", "LoreBuddyWindowFrame", UIParent, "BackdropTemplate")
-    frame:SetSize(360, 480)
-    frame:SetPoint("CENTER")
+    local frame = CreateFrame("Frame", "LoreBuddyJournalFrame", UIParent, "BackdropTemplate")
+    frame:SetSize(380, 500)
     frame:SetFrameStrata("DIALOG")
-    frame:SetMovable(true)
-    frame:EnableMouse(true)
-    frame:RegisterForDrag("LeftButton")
-    frame:SetScript("OnDragStart", frame.StartMoving)
-    frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
+    Theme.applyPanelBackdrop(frame)
+    Theme.makeDraggable(frame, state, "journal", { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 })
     frame:Hide()
-    if frame.SetBackdrop then
-        frame:SetBackdrop({
-            bgFile = "Interface/Tooltips/UI-Tooltip-Background",
-            edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-            edgeSize = 16,
-            insets = { left = 4, right = 4, top = 4, bottom = 4 }
-        })
-    end
 
-    local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    local title = frame:CreateFontString(nil, "OVERLAY", Theme.fonts.title)
     title:SetPoint("TOP", 0, -14)
-    title:SetText("LoreBuddy")
+    title:SetText("Lore Buddy")
+    Theme.styleHeading(title)
 
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
     closeButton:SetPoint("TOPRIGHT", -4, -4)
     closeButton:SetScript("OnClick", function()
-        frame:Hide()
+        Theme.fadeOut(frame, 0.15)
+    end)
+
+    local settingsButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    settingsButton:SetSize(22, 22)
+    settingsButton:SetPoint("TOPLEFT", 6, -6)
+    settingsButton:SetText("*")
+    settingsButton:SetScript("OnClick", function()
+        if onOpenSettings then onOpenSettings() end
     end)
 
     local searchBox = CreateFrame("EditBox", nil, frame, "InputBoxTemplate")
@@ -85,18 +85,20 @@ function LoreWindow.new(engine, personality)
             personality:setMode(checkbox:GetChecked() and "buddy" or "quiet")
         end
     end)
-    local buddyLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local buddyLabel = frame:CreateFontString(nil, "OVERLAY", Theme.fonts.body)
     buddyLabel:SetPoint("LEFT", buddyCheck, "RIGHT", 2, 0)
     buddyLabel:SetText("Buddy Mode")
+    Theme.styleBody(buddyLabel)
 
     local anchor = buddyCheck
     for i = 1, MAX_RESULTS do
         local row = CreateFrame("Button", nil, frame)
-        row:SetSize(320, 16)
+        row:SetSize(340, 16)
         row:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, i == 1 and -10 or -2)
-        local label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local label = row:CreateFontString(nil, "OVERLAY", Theme.fonts.body)
         label:SetPoint("LEFT", 0, 0)
         label:SetJustifyH("LEFT")
+        Theme.styleBody(label)
         row.label = label
         row:SetScript("OnClick", function()
             if row.entityId then
@@ -108,18 +110,29 @@ function LoreWindow.new(engine, personality)
         anchor = row
     end
 
-    local resultLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local resultLabel = frame:CreateFontString(nil, "OVERLAY", Theme.fonts.heading)
     resultLabel:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
     resultLabel:SetJustifyH("LEFT")
+    Theme.styleHeading(resultLabel)
 
-    local detail = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    detail:SetPoint("TOPLEFT", resultLabel, "BOTTOMLEFT", 0, -8)
-    detail:SetPoint("BOTTOMRIGHT", -16, 16)
-    detail:SetJustifyH("LEFT")
-    detail:SetJustifyV("TOP")
-    if detail.SetWordWrap then
-        detail:SetWordWrap(true)
+    -- Real ScrollFrame for long-form lore text (Deep Dive can be long).
+    local scrollFrame = CreateFrame("ScrollFrame", "LoreBuddyJournalScroll", frame, "UIPanelScrollFrameTemplate")
+    scrollFrame:SetPoint("TOPLEFT", resultLabel, "BOTTOMLEFT", 0, -8)
+    scrollFrame:SetPoint("BOTTOMRIGHT", -30, 16)
+
+    local detail = CreateFrame("Frame", nil, scrollFrame)
+    detail:SetSize(1, 1)
+    scrollFrame:SetScrollChild(detail)
+
+    local detailText = detail:CreateFontString(nil, "OVERLAY", Theme.fonts.body)
+    detailText:SetPoint("TOPLEFT", 0, 0)
+    detailText:SetWidth(300)
+    detailText:SetJustifyH("LEFT")
+    detailText:SetJustifyV("TOP")
+    if detailText.SetWordWrap then
+        detailText:SetWordWrap(true)
     end
+    Theme.styleBody(detailText)
 
     searchBox:SetScript("OnEnterPressed", function(box)
         self:search(box:GetText())
@@ -129,11 +142,20 @@ function LoreWindow.new(engine, personality)
     self.frame = frame
     self.searchBox = searchBox
     self.resultLabel = resultLabel
-    self.detail = detail
+    self.scrollFrame = scrollFrame
+    self.detailFrame = detail
+    self.detailText = detailText
     return self
 end
 
-function LoreWindow:renderResultRows()
+function LoreBuddyJournal:setDetailText(text)
+    self.detailText:SetText(text or "")
+    if self.detailFrame and self.detailText.GetStringHeight then
+        self.detailFrame:SetHeight(self.detailText:GetStringHeight())
+    end
+end
+
+function LoreBuddyJournal:renderResultRows()
     for i, row in ipairs(self.rows) do
         local entity = self.results[i]
         if entity then
@@ -151,11 +173,11 @@ function LoreWindow:renderResultRows()
     else
         self.selectedEntityId = nil
         self.resultLabel:SetText(self.emptyMessage or "")
-        self.detail:SetText("")
+        self:setDetailText("")
     end
 end
 
-function LoreWindow:search(query)
+function LoreBuddyJournal:search(query)
     if not self.engine then
         return
     end
@@ -175,7 +197,7 @@ end
 
 -- "Your personal lore book grows": lists only entities this character has
 -- actually encountered (PlayerMemory), independent of any search text.
-function LoreWindow:showLoreBook()
+function LoreBuddyJournal:showLoreBook()
     if not self.engine then
         return
     end
@@ -201,7 +223,7 @@ function LoreWindow:showLoreBook()
     self:renderResultRows()
 end
 
-function LoreWindow:selectEntity(entityId)
+function LoreBuddyJournal:selectEntity(entityId)
     local entity = self.engine.entities:get(entityId)
     if not entity then
         return
@@ -211,14 +233,14 @@ function LoreWindow:selectEntity(entityId)
     self:renderDetail()
 end
 
-function LoreWindow:setMode(mode)
+function LoreBuddyJournal:setMode(mode)
     self.mode = mode
     self:renderDetail()
 end
 
-function LoreWindow:renderDetail()
+function LoreBuddyJournal:renderDetail()
     if not self.selectedEntityId then
-        self.detail:SetText("")
+        self:setDetailText("")
         return
     end
     local entity = self.engine.entities:get(self.selectedEntityId)
@@ -233,35 +255,35 @@ function LoreWindow:renderDetail()
             return (DETAIL_LEVEL_ORDER[a.detailLevel] or 4) < (DETAIL_LEVEL_ORDER[b.detailLevel] or 4)
         end)
         if #visible == 0 then
-            self.detail:SetText("(Nothing unlocked yet about " .. entity.name .. ".)")
+            self:setDetailText("(Nothing unlocked yet about " .. entity.name .. ".)")
             return
         end
         local parts = {}
         for _, statement in ipairs(visible) do
             table.insert(parts, "[" .. string.upper(statement.detailLevel) .. "] " .. statement.text)
         end
-        self.detail:SetText(table.concat(parts, "\n\n"))
+        self:setDetailText(table.concat(parts, "\n\n"))
     else
         local lore = self.engine:findLoreAbout(entity.name, { detailLevel = "quick" })
-        self.detail:SetText(lore[1] and lore[1].statement.text or "")
+        self:setDetailText(lore[1] and lore[1].statement.text or "")
     end
 end
 
-function LoreWindow:show()
+function LoreBuddyJournal:show()
     if self.frame then
-        self.frame:Show()
+        Theme.fadeIn(self.frame, 0.2)
     end
 end
 
-function LoreWindow:toggle()
+function LoreBuddyJournal:toggle()
     if not self.frame then
         return
     end
     if self.frame:IsShown() then
-        self.frame:Hide()
+        Theme.fadeOut(self.frame, 0.15)
     else
-        self.frame:Show()
+        self:show()
     end
 end
 
-LoreBuddyCore.Addon.LoreWindow = LoreWindow
+LoreBuddyCore.Addon.LoreBuddyJournal = LoreBuddyJournal

@@ -1,5 +1,13 @@
 # Blizzard API Setup
 
+**Status: optional, rarely used.** LoreBuddy's lore database is built from
+original writing plus cited secondary sources (Warcraft Wiki, Wowhead); it
+does not depend on this API. The Game Data API only returns structured
+metadata (IDs, names, taxonomy) -- never narrative lore text -- so its only
+realistic use here is occasionally verifying a name/ID already in our
+dataset against an official record. Most contributors will never need this
+guide.
+
 This guide covers creating a Blizzard Developer Portal client for optional
 World of Warcraft Classic data, including the Burning Crusade Classic (TBC)
 era. It is setup guidance, not a place to store credentials.
@@ -11,6 +19,15 @@ addon must continue to work offline with packaged data and previously saved
 discovery state. Client credentials and API calls must stay in a trusted service
 or local development tool; they must never be embedded in the addon or shipped
 to players.
+
+## Account Prerequisites
+
+Before creating a client:
+
+1. Log in to your Battle.net account, or [create one](https://account.battle.net/creation).
+2. Attach a [Battle.net Authenticator](https://us.battle.net/support/en/article/24520).
+   Two-factor authentication is required for any API usage.
+3. Accept the [Blizzard Developer API Terms of Use](https://www.blizzard.com/en-us/legal/a2989b50-5f16-43b1-abec-2ae17cc09dd6/blizzard-developer-api-terms-of-use).
 
 ## Create the Client
 
@@ -104,6 +121,36 @@ Remote data must be cached or transformed into an approved offline format before
 the core addon depends on it. A request failure should degrade to local data,
 not remove the player's ability to use LoreBuddy.
 
+## Namespaces
+
+Game Data and Profile APIs publish every document to a namespace, which lets
+multiple versions of the same document type coexist at one URL without being
+overwritten. A namespace is specified either as a query parameter
+(`?namespace=dynamic-us`) or a request header (`Battlenet-Namespace`). Do not
+treat a namespace as strict or semantic versioning, even when it contains a
+version-like string; naming and rotation are decided by the API publisher, not
+by a fixed convention we can rely on.
+
+## Response Format And JSON Document Links
+
+Game Data and Profile APIs return one full resource per request, not a
+composite of several objects, and responses are only reshaped when a
+localization identifier is requested. To reach related data, follow the
+`_links`/`key` objects embedded in a response rather than constructing URLs by
+hand:
+
+```json
+{
+  "key": { "href": "https://us.api.blizzard.com/data/wow/journal-instance/758?namespace=static-us" },
+  "name": { "en_US": "Icecrown Citadel", "de_DE": "Die Eiskronenzitadelle" },
+  "id": 758
+}
+```
+
+When we persist data from a linked resource, record the `href` alongside the
+usual source/provenance fields so the exact resource can be re-fetched or
+re-verified later.
+
 ## Rate Limits
 
 Plan for the documented limit of 36,000 requests per hour and 100 requests per
@@ -123,5 +170,8 @@ configuration file.
 
 - [Using OAuth](https://community.developer.battle.net/documentation/guides/using-oauth)
 - [Game Data APIs](https://community.developer.battle.net/documentation/guides/game-data-apis)
+- [Community APIs](https://community.developer.battle.net/documentation/guides/community-apis)
 - [Regionality and APIs](https://community.developer.battle.net/documentation/guides/regionality-and-apis)
 - [World of Warcraft Classic API](https://community.developer.battle.net/documentation/world-of-warcraft-classic)
+- [World of Warcraft API reference](https://community.developer.battle.net/documentation/world-of-warcraft)
+- [Battle.net API reference](https://community.developer.battle.net/documentation/battle-net)

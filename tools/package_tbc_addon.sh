@@ -17,6 +17,10 @@ mkdir -p "$output_dir/Core" "$output_dir/Addon"
 cp "$root_dir/addon/LoreBuddy_TBC.toc" "$output_dir/LoreBuddy_TBC.toc"
 cp "$root_dir"/core/*.lua "$output_dir/Core/"
 cp "$root_dir"/addon/*.lua "$output_dir/Addon/"
+if [ -d "$root_dir/addon/Media" ]; then
+    mkdir -p "$output_dir/Addon/Media"
+    cp "$root_dir"/addon/Media/* "$output_dir/Addon/Media/"
+fi
 
 sed -i '' \
     -e 's#^core/#Core/#' \
