@@ -25,5 +25,6 @@ addon/DiscoverySignalAdapter.lua
 addon/EventRouter.lua
 addon/LorePopup.lua
 addon/LoreWindow.lua
+addon/Personality.lua
 addon/Bootstrap.lua
 addon/LoreBuddy.lua

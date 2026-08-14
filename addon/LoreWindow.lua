@@ -5,16 +5,20 @@ LoreBuddyCore.Addon = LoreBuddyCore.Addon or {}
 local LoreWindow = {}
 LoreWindow.__index = LoreWindow
 
--- v0.1 window: a minimal search box plus a detail readout. This is the
--- in-game equivalent of the desktop Explorer, scoped down for a first pass.
-function LoreWindow.new(engine)
-    local self = setmetatable({ engine = engine }, LoreWindow)
+local MAX_RESULTS = 8
+local DETAIL_LEVEL_ORDER = { quick = 1, story = 2, deep = 3 }
+
+-- Encyclopedia Mode: quick-level summary for the selected entity.
+-- Deep Dive Mode: every currently unlocked statement (quick/story/deep),
+-- still respecting discovery gates -- never a spoiler shortcut.
+function LoreWindow.new(engine, personality)
+    local self = setmetatable({ engine = engine, personality = personality, mode = "encyclopedia", rows = {} }, LoreWindow)
     if not CreateFrame then
         return self -- outside WoW (e.g. Lua tests); UI stays inert
     end
 
     local frame = CreateFrame("Frame", "LoreBuddyWindowFrame", UIParent, "BackdropTemplate")
-    frame:SetSize(360, 420)
+    frame:SetSize(360, 480)
     frame:SetPoint("CENTER")
     frame:SetFrameStrata("DIALOG")
     frame:SetMovable(true)
@@ -36,13 +40,11 @@ function LoreWindow.new(engine)
     title:SetPoint("TOP", 0, -14)
     title:SetText("LoreBuddy")
 
-    if CreateFrame then
-        local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-        closeButton:SetPoint("TOPRIGHT", -4, -4)
-        closeButton:SetScript("OnClick", function()
-            frame:Hide()
-        end)
-    end
+    local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    closeButton:SetPoint("TOPRIGHT", -4, -4)
+    closeButton:SetScript("OnClick", function()
+        frame:Hide()
+    end)
 
     local searchBox = CreateFrame("EditBox", nil, frame, "InputBoxTemplate")
     searchBox:SetSize(300, 20)
@@ -51,8 +53,55 @@ function LoreWindow.new(engine)
         searchBox:SetAutoFocus(false)
     end
 
+    local encyclopediaButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    encyclopediaButton:SetSize(120, 22)
+    encyclopediaButton:SetPoint("TOP", searchBox, "BOTTOM", -65, -10)
+    encyclopediaButton:SetText("Encyclopedia")
+    encyclopediaButton:SetScript("OnClick", function()
+        self:setMode("encyclopedia")
+    end)
+
+    local deepDiveButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    deepDiveButton:SetSize(100, 22)
+    deepDiveButton:SetPoint("LEFT", encyclopediaButton, "RIGHT", 6, 0)
+    deepDiveButton:SetText("Deep Dive")
+    deepDiveButton:SetScript("OnClick", function()
+        self:setMode("deepdive")
+    end)
+
+    local buddyCheck = CreateFrame("CheckButton", nil, frame, "UICheckButtonTemplate")
+    buddyCheck:SetPoint("TOPLEFT", encyclopediaButton, "BOTTOMLEFT", 0, -6)
+    buddyCheck:SetChecked(personality and personality:getMode() == "buddy")
+    buddyCheck:SetScript("OnClick", function(checkbox)
+        if personality then
+            personality:setMode(checkbox:GetChecked() and "buddy" or "quiet")
+        end
+    end)
+    local buddyLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    buddyLabel:SetPoint("LEFT", buddyCheck, "RIGHT", 2, 0)
+    buddyLabel:SetText("Buddy Mode")
+
+    local anchor = buddyCheck
+    for i = 1, MAX_RESULTS do
+        local row = CreateFrame("Button", nil, frame)
+        row:SetSize(320, 16)
+        row:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, i == 1 and -10 or -2)
+        local label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        label:SetPoint("LEFT", 0, 0)
+        label:SetJustifyH("LEFT")
+        row.label = label
+        row:SetScript("OnClick", function()
+            if row.entityId then
+                self:selectEntity(row.entityId)
+            end
+        end)
+        row:Hide()
+        self.rows[i] = row
+        anchor = row
+    end
+
     local resultLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    resultLabel:SetPoint("TOPLEFT", searchBox, "BOTTOMLEFT", 0, -12)
+    resultLabel:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
     resultLabel:SetJustifyH("LEFT")
 
     local detail = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -77,26 +126,84 @@ function LoreWindow.new(engine)
 end
 
 function LoreWindow:search(query)
-    if not self.engine or not query or query == "" then
+    if not self.engine then
         return
     end
-    local matches = self.engine:findCharacter(query)
-    if #matches == 0 then
-        matches = self.engine.entities:find(query)
+    self.results = {}
+    if query and query ~= "" then
+        local matches = self.engine.entities:find(query)
+        for i, match in ipairs(matches) do
+            if i > MAX_RESULTS then
+                break
+            end
+            table.insert(self.results, match.entity)
+        end
     end
-    if #matches == 0 then
-        self.resultLabel:SetText('No matches for "' .. query .. '"')
+    for i, row in ipairs(self.rows) do
+        local entity = self.results[i]
+        if entity then
+            row.label:SetText(string.format("%s (%s)", entity.name, entity.type))
+            row.entityId = entity.id
+            row:Show()
+        else
+            row.label:SetText("")
+            row.entityId = nil
+            row:Hide()
+        end
+    end
+    if self.results[1] then
+        self:selectEntity(self.results[1].id)
+    else
+        self.selectedEntityId = nil
+        self.resultLabel:SetText(query and query ~= "" and ('No matches for "' .. query .. '"') or "")
+        self.detail:SetText("")
+    end
+end
+
+function LoreWindow:selectEntity(entityId)
+    local entity = self.engine.entities:get(entityId)
+    if not entity then
+        return
+    end
+    self.selectedEntityId = entityId
+    self.resultLabel:SetText(entity.name)
+    self:renderDetail()
+end
+
+function LoreWindow:setMode(mode)
+    self.mode = mode
+    self:renderDetail()
+end
+
+function LoreWindow:renderDetail()
+    if not self.selectedEntityId then
         self.detail:SetText("")
         return
     end
-    local entity = matches[1].entity
-    self.resultLabel:SetText(entity.name)
-    local lore = self.engine:findLoreAbout(entity.name, { detailLevel = "quick" })
-    local text = ""
-    if lore[1] then
-        text = lore[1].statement.text
+    local entity = self.engine.entities:get(self.selectedEntityId)
+    if self.mode == "deepdive" then
+        local visible = {}
+        for _, statement in ipairs(self.engine.dataset.statements or {}) do
+            if statement.entityId == self.selectedEntityId and self.engine.discovery:isVisible(statement) then
+                table.insert(visible, statement)
+            end
+        end
+        table.sort(visible, function(a, b)
+            return (DETAIL_LEVEL_ORDER[a.detailLevel] or 4) < (DETAIL_LEVEL_ORDER[b.detailLevel] or 4)
+        end)
+        if #visible == 0 then
+            self.detail:SetText("(Nothing unlocked yet about " .. entity.name .. ".)")
+            return
+        end
+        local parts = {}
+        for _, statement in ipairs(visible) do
+            table.insert(parts, "[" .. string.upper(statement.detailLevel) .. "] " .. statement.text)
+        end
+        self.detail:SetText(table.concat(parts, "\n\n"))
+    else
+        local lore = self.engine:findLoreAbout(entity.name, { detailLevel = "quick" })
+        self.detail:SetText(lore[1] and lore[1].statement.text or "")
     end
-    self.detail:SetText(text)
 end
 
 function LoreWindow:toggle()

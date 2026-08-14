@@ -42,11 +42,12 @@ local function buildContext(engine, rawContext)
     return context
 end
 
-local function announceIfRelevant(engine, popup, context)
+local function announceIfRelevant(engine, popup, personality, context)
     local decision = engine:evaluateContext(context)
     for _, suggestion in ipairs(decision.suggestions) do
         if suggestion.introduction then
-            popup:show(suggestion.entity, suggestion.introduction.text)
+            local text, duration = personality:announce(suggestion.entity, suggestion.introduction.text)
+            popup:show(suggestion.entity, text, duration)
             return engine:rememberEntity(suggestion.entity.id)
         end
     end
@@ -63,7 +64,9 @@ function Addon.start()
     end
 
     Addon.popup = Addon.LorePopup.new()
-    Addon.window = Addon.LoreWindow.new(engine)
+    ---@diagnostic disable-next-line: undefined-field
+    Addon.personality = Addon.Personality.new(_G.LoreBuddyCharacterState or {})
+    Addon.window = Addon.LoreWindow.new(engine, Addon.personality)
     Addon.collector = Addon.ContextCollector.new()
 
     if not CreateFrame then
@@ -74,7 +77,7 @@ function Addon.start()
 
     local function evaluateAndAnnounce()
         local rawContext = Addon.collector:collect()
-        announceIfRelevant(engine, Addon.popup, buildContext(engine, rawContext))
+        announceIfRelevant(engine, Addon.popup, Addon.personality, buildContext(engine, rawContext))
     end
 
     Addon.router:on("PLAYER_TARGET_CHANGED", evaluateAndAnnounce)
@@ -85,6 +88,7 @@ function Addon.start()
     if SlashCmdList then
         _G.SLASH_LOREBUDDY1 = "/lorebuddy"
         _G.SLASH_LOREBUDDY2 = "/lb"
+        ---@diagnostic disable-next-line: duplicate-set-field
         SlashCmdList["LOREBUDDY"] = function()
             Addon.window:toggle()
         end
