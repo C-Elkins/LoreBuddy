@@ -1,12 +1,56 @@
 <p align="center">
-  <img src="assets/logo/lorebuddy-badge.png" alt="LoreBuddy" width="340">
+  <img src="assets/logo/lorebuddy-banner.png" alt="LoreBuddy: Your Adventures. Our Stories." width="439">
+</p>
+
+<p align="center">
+  <img src="assets/logo/lorebuddy-portrait.png" alt="LoreBuddy orc reading a lore book" width="300">
 </p>
 
 # LoreBuddy
 
 > *Your Adventures. Our Stories.*
 
-An open-source contextual lore companion for World of Warcraft and beyond.
+LoreBuddy is an open-source, offline-first lore companion for World of
+Warcraft. It helps players understand the characters, places, factions, items,
+quests, and events around them without turning every moment into an
+encyclopedia entry.
+
+## What It Does
+
+LoreBuddy is designed to provide contextual lore at the player's pace:
+
+- Finds lore about nearby zones, NPCs, quests, events, and other entities.
+- Supports quick, story, and deep detail levels.
+- Respects discovery history and hides gated spoilers by default.
+- Distinguishes confirmed facts from interpretations, theories, and speculation.
+- Preserves source provenance, authority, attribution, and licensing details.
+- Works with packaged local data without requiring an internet connection.
+- Keeps optional Blizzard API enrichment and AI explanations outside the core
+  addon boundary.
+
+The initial addon target is Burning Crusade Classic Anniversary. The project is
+currently in early development, and the TBC client interface value must still
+be verified in an installed game client before a public release.
+
+## Development Quick Start
+
+Clone the repository, then validate the example lore dataset before making data
+or schema changes:
+
+```sh
+./LoreBuddy validate
+```
+
+Build the installable addon layout for local testing with:
+
+```sh
+./tools/package_tbc_addon.sh
+```
+
+The generated `build/LoreBuddy/` directory contains the addon TOC plus the
+packaged `Core/` and `Addon/` Lua files. See the project documents below for
+the data model, source rules, compatibility evidence, and optional Blizzard
+API setup.
 
 Before coding, read [Project Philosophy](docs/PROJECT_PHILOSOPHY.md). For
 optional Blizzard API setup, see [Blizzard API Setup](docs/BLIZZARD_API_SETUP.md).
@@ -17,6 +61,7 @@ The offline query modules are described in [Lore Engine](docs/LORE_ENGINE.md).
 Run `./LoreBuddy validate` to check the database before adding or packaging
 content.
 The initial addon target is documented in [TBC Anniversary Compatibility](docs/TBC_ANNIVERSARY_COMPATIBILITY.md).
+CurseForge-ready copy is maintained in [CurseForge Description](docs/CURSEFORGE_DESCRIPTION.md).
 
 ## License
 
