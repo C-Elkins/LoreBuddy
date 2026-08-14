@@ -48,4 +48,28 @@ function RelationshipManager:between(subjectId, objectId, predicate)
     return nil
 end
 
+-- Unlike connections(), this returns relationships in either direction
+-- regardless of symmetry. Used for context relevance, where a zone or event
+-- is usually only ever the object of a directional predicate (located_at,
+-- contains, participated_in) but should still surface connected entities.
+function RelationshipManager:touching(entityId, predicate)
+    local results = {}
+    for _, relationship in ipairs(self.relationships) do
+        local isSubject = relationship.subjectId == entityId
+        local isObject = relationship.objectId == entityId
+        local matchesPredicate = not predicate or relationship.predicate == predicate
+        if matchesPredicate and (isSubject or isObject) then
+            local otherId = isSubject and relationship.objectId or relationship.subjectId
+            table.insert(results, {
+                relationship = relationship,
+                entity = self.entityManager and self.entityManager:get(otherId),
+                entityId = otherId,
+                direction = isSubject and "outgoing" or "incoming"
+            })
+        end
+    end
+    return results
+end
+
+
 LoreBuddyCore.RelationshipManager = RelationshipManager

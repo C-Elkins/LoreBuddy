@@ -4,6 +4,17 @@ _G.LoreBuddyCore = LoreBuddyCore
 local LoreEngine = {}
 LoreEngine.__index = LoreEngine
 
+local contextAnchorFields = { "zoneId", "npcId", "bossId", "questId", "eventId", "locationId" }
+
+local function firstVisibleStatement(engine, entityId, detailLevel)
+    for _, statement in ipairs(engine.dataset.statements or {}) do
+        if statement.entityId == entityId and statement.detailLevel == detailLevel and engine.discovery:isVisible(statement) then
+            return statement
+        end
+    end
+    return nil
+end
+
 function LoreEngine.new(dataset, discoveryState)
     local valid, errors = LoreBuddyCore.ValidationEngine.validate(dataset)
     assert(valid, table.concat(errors, "; "))
@@ -73,5 +84,85 @@ end
 function LoreEngine:hasPlayerEncountered(entityId)
     return self.memory:hasEncountered(entityId)
 end
+
+-- The context engine's core decision: given the player's current situation
+-- (zone, NPC, boss, quest, event) and what they already know, decide whether
+-- there is something interesting LoreBuddy should introduce right now.
+-- Traverses the relationship graph up to options.depth hops (default 2) so
+-- entities connected to entities in the current context surface too, not
+-- just entities directly linked to the zone/NPC/quest itself.
+function LoreEngine:evaluateContext(context, options)
+    context = context or {}
+    options = options or {}
+    local maxDepth = options.depth or 2
+
+    local anchorIds = {}
+    for _, entityId in ipairs(context.entityIds or {}) do
+        anchorIds[entityId] = true
+    end
+    for _, field in ipairs(contextAnchorFields) do
+        if context[field] then
+            anchorIds[context[field]] = true
+        end
+    end
+
+    local anchors = {}
+    for entityId in pairs(anchorIds) do
+        local entity = self.entities:get(entityId)
+        if entity then
+            table.insert(anchors, entity)
+        end
+    end
+    table.sort(anchors, function(a, b) return a.name < b.name end)
+
+    local candidates = {}
+    local reasons = {}
+    local relatedRelationships = {}
+    local frontier = {}
+    for _, anchor in ipairs(anchors) do
+        candidates[anchor.id] = anchor
+        reasons[anchor.id] = "In the current context"
+        table.insert(frontier, anchor)
+    end
+
+    local depth = 0
+    while depth < maxDepth and #frontier > 0 do
+        depth = depth + 1
+        local nextFrontier = {}
+        for _, current in ipairs(frontier) do
+            for _, connection in ipairs(self.relationships:touching(current.id)) do
+                local candidate = connection.entity
+                if candidate and not candidates[candidate.id] then
+                    candidates[candidate.id] = candidate
+                    reasons[candidate.id] = string.format("Connected to %s via %s", current.name, connection.relationship.predicate)
+                    relatedRelationships[candidate.id] = connection.relationship
+                    table.insert(nextFrontier, candidate)
+                end
+            end
+        end
+        frontier = nextFrontier
+    end
+
+    local suggestions = {}
+    for entityId, entity in pairs(candidates) do
+        if not self.memory:hasEncountered(entityId) then
+            table.insert(suggestions, {
+                entity = entity,
+                reason = reasons[entityId],
+                relationship = relatedRelationships[entityId],
+                introduction = firstVisibleStatement(self, entityId, "quick"),
+                shouldIntroduce = true
+            })
+        end
+    end
+    table.sort(suggestions, function(a, b) return a.entity.name < b.entity.name end)
+
+    return {
+        anchors = anchors,
+        zoneLore = self.context:relevant(context),
+        suggestions = suggestions
+    }
+end
+
 
 LoreBuddyCore.LoreEngine = LoreEngine

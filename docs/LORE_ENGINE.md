@@ -34,6 +34,13 @@ local akamaLore = engine:findRelevantLore({ npcId = "akama" })
 local discovered = engine:hasPlayerDiscovered("Illidan")
 local encounter = engine:rememberEntity("illidan_stormrage")
 -- encounter.message is "You've encountered this character before." on repeat visits.
+
+local decision = engine:evaluateContext({ zoneId = "black_temple" })
+-- decision.suggestions lists entities connected to the current context (up to
+-- two relationship hops by default) that the player has not yet encountered,
+-- each with a reason, the connecting relationship, and a quick introduction
+-- statement -- e.g. "Akama" reachable via Illidan even though the player is
+-- only standing in Black Temple.
 ```
 
 Results include the entity, statement or relationship, and source records where
