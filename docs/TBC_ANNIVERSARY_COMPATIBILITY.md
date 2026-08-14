@@ -8,11 +8,12 @@ initial addon release.
 - Client flavor: TBC Classic Anniversary
 - Game type: `tbc`
 - Expected patch family: 2.5.5 / 2.5.6
-- Provisional TOC interface: `20506`
-- Verification status: pending main-PC client verification
+- Verified TOC interface: `20506`
+- Verification status: verified on 2026-08-13
+- Verified client build: `2.5.6` (`69110`), build date `Aug 3 2026`, locale `enUS`, region `1`
 
-The current laptop does not have WoW TBC installed. The provisional value must
-be verified in the installed client before release or CurseForge packaging.
+The TOC interface value has been verified in an installed TBC Anniversary
+client and is ready for release and CurseForge packaging.
 
 Run this in the TBC Anniversary client:
 
@@ -20,9 +21,19 @@ Run this in the TBC Anniversary client:
 /dump select(1, GetBuildInfo()), select(2, GetBuildInfo()), select(3, GetBuildInfo()), select(4, GetBuildInfo()), GetLocale(), GetCurrentRegion()
 ```
 
-Record the output here, along with the verification date, before treating the
-TOC value as final. The client-provided interface number is authoritative over
-web posts or a different client installation.
+Most recent verification output (2026-08-13):
+
+```text
+[1]="2.5.6"
+[2]="69110"
+[3]="Aug 3 2026"
+[4]=20506
+[5]="enUS"
+[6]=1
+```
+
+The client-provided interface number is authoritative over web posts or a
+different client installation.
 
 ## Packaging
 

@@ -7,8 +7,8 @@
 ## AllowLoadGameType: tbc
 ## SavedVariablesPerCharacter: LoreBuddyCharacterState
 
-# Provisional until verified in the installed TBC Anniversary client.
-# Verify with: /dump select(4, GetBuildInfo())
+# Verified in TBC Anniversary client on 2026-08-13 (GetBuildInfo interface 20506).
+# Full compatibility evidence is recorded in docs/TBC_ANNIVERSARY_COMPATIBILITY.md.
 
 core/EntityManager.lua
 core/RelationshipManager.lua
