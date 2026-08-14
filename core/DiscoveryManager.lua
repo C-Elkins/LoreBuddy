@@ -70,4 +70,22 @@ function DiscoveryManager:hasDiscovered(entityId, statements)
     return false
 end
 
+-- "Later" support: defer a discovery notification without losing it.
+function DiscoveryManager:hasDismissedHint(hintId)
+    for _, dismissedId in ipairs(self.state.dismissedHintIds or {}) do
+        if dismissedId == hintId then
+            return true
+        end
+    end
+    return false
+end
+
+function DiscoveryManager:markHintDismissed(hintId)
+    if self:hasDismissedHint(hintId) then
+        return false
+    end
+    table.insert(self.state.dismissedHintIds, hintId)
+    return true
+end
+
 LoreBuddyCore.DiscoveryManager = DiscoveryManager

@@ -69,8 +69,16 @@ function LoreWindow.new(engine, personality)
         self:setMode("deepdive")
     end)
 
+    local loreBookButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    loreBookButton:SetSize(110, 22)
+    loreBookButton:SetPoint("TOP", encyclopediaButton, "BOTTOM", 30, -6)
+    loreBookButton:SetText("My Lore Book")
+    loreBookButton:SetScript("OnClick", function()
+        self:showLoreBook()
+    end)
+
     local buddyCheck = CreateFrame("CheckButton", nil, frame, "UICheckButtonTemplate")
-    buddyCheck:SetPoint("TOPLEFT", encyclopediaButton, "BOTTOMLEFT", 0, -6)
+    buddyCheck:SetPoint("TOPLEFT", loreBookButton, "BOTTOMLEFT", 0, -6)
     buddyCheck:SetChecked(personality and personality:getMode() == "buddy")
     buddyCheck:SetScript("OnClick", function(checkbox)
         if personality then
@@ -125,20 +133,7 @@ function LoreWindow.new(engine, personality)
     return self
 end
 
-function LoreWindow:search(query)
-    if not self.engine then
-        return
-    end
-    self.results = {}
-    if query and query ~= "" then
-        local matches = self.engine.entities:find(query)
-        for i, match in ipairs(matches) do
-            if i > MAX_RESULTS then
-                break
-            end
-            table.insert(self.results, match.entity)
-        end
-    end
+function LoreWindow:renderResultRows()
     for i, row in ipairs(self.rows) do
         local entity = self.results[i]
         if entity then
@@ -155,9 +150,53 @@ function LoreWindow:search(query)
         self:selectEntity(self.results[1].id)
     else
         self.selectedEntityId = nil
-        self.resultLabel:SetText(query and query ~= "" and ('No matches for "' .. query .. '"') or "")
+        self.resultLabel:SetText(self.emptyMessage or "")
         self.detail:SetText("")
     end
+end
+
+function LoreWindow:search(query)
+    if not self.engine then
+        return
+    end
+    self.results = {}
+    if query and query ~= "" then
+        local matches = self.engine.entities:find(query)
+        for i, match in ipairs(matches) do
+            if i > MAX_RESULTS then
+                break
+            end
+            table.insert(self.results, match.entity)
+        end
+    end
+    self.emptyMessage = query and query ~= "" and ('No matches for "' .. query .. '"') or ""
+    self:renderResultRows()
+end
+
+-- "Your personal lore book grows": lists only entities this character has
+-- actually encountered (PlayerMemory), independent of any search text.
+function LoreWindow:showLoreBook()
+    if not self.engine then
+        return
+    end
+    self.searchBox:SetText("")
+    self.results = {}
+    local seen = {}
+    local memoryState = self.engine.memory.state
+    for _, category in ipairs({ "discoveredCharacters", "discoveredLocations", "discoveredEvents", "discoveredFactions" }) do
+        for _, entityId in ipairs(memoryState[category] or {}) do
+            if not seen[entityId] then
+                seen[entityId] = true
+                local entity = self.engine.entities:get(entityId)
+                if entity then
+                    table.insert(self.results, entity)
+                end
+            end
+        end
+    end
+    table.sort(self.results, function(a, b) return a.name < b.name end)
+    self.emptyMessage = "Your lore book is empty. Go explore!"
+    self:renderResultRows()
 end
 
 function LoreWindow:selectEntity(entityId)
@@ -203,6 +242,12 @@ function LoreWindow:renderDetail()
     else
         local lore = self.engine:findLoreAbout(entity.name, { detailLevel = "quick" })
         self.detail:SetText(lore[1] and lore[1].statement.text or "")
+    end
+end
+
+function LoreWindow:show()
+    if self.frame then
+        self.frame:Show()
     end
 end
 

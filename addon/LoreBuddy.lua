@@ -42,12 +42,22 @@ local function buildContext(engine, rawContext)
     return context
 end
 
-local function announceIfRelevant(engine, popup, personality, context)
+local function connectionEntityFor(engine, suggestion)
+    local relationship = suggestion.relationship
+    if not relationship then
+        return nil
+    end
+    local otherId = relationship.subjectId == suggestion.entity.id and relationship.objectId or relationship.subjectId
+    return engine.entities:get(otherId)
+end
+
+local function announceIfRelevant(engine, toast, personality, context)
     local decision = engine:evaluateContext(context)
     for _, suggestion in ipairs(decision.suggestions) do
         if suggestion.introduction then
-            local text, duration = personality:announce(suggestion.entity, suggestion.introduction.text)
-            popup:show(suggestion.entity, text, duration)
+            local connectionEntity = connectionEntityFor(engine, suggestion)
+            local text = personality:announce(suggestion.entity, suggestion.introduction.text)
+            toast:show(suggestion.entity, connectionEntity, text)
             return engine:rememberEntity(suggestion.entity.id)
         end
     end
@@ -68,6 +78,16 @@ function Addon.start()
     Addon.personality = Addon.Personality.new(_G.LoreBuddyCharacterState or {})
     Addon.window = Addon.LoreWindow.new(engine, Addon.personality)
     Addon.collector = Addon.ContextCollector.new()
+    Addon.discoveryToast = Addon.DiscoveryToast.new(
+        function(entity)
+            Addon.window:selectEntity(entity.id)
+            Addon.window:setMode("deepdive")
+            Addon.window:show()
+        end,
+        function(entity)
+            engine.discovery:markHintDismissed("defer_" .. entity.id)
+        end
+    )
 
     if not CreateFrame then
         return -- outside WoW (e.g. Lua tests); nothing left to wire
@@ -77,7 +97,7 @@ function Addon.start()
 
     local function evaluateAndAnnounce()
         local rawContext = Addon.collector:collect()
-        announceIfRelevant(engine, Addon.popup, Addon.personality, buildContext(engine, rawContext))
+        announceIfRelevant(engine, Addon.discoveryToast, Addon.personality, buildContext(engine, rawContext))
     end
 
     Addon.router:on("PLAYER_TARGET_CHANGED", evaluateAndAnnounce)
