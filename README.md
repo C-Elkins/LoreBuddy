@@ -1,8 +1,10 @@
+# LoreBuddy
+
+<!-- markdownlint-disable MD033 -->
 <p align="center">
   <img src="assets/logo/lorebuddy-portrait.png" alt="LoreBuddy orc reading a lore book" width="300">
 </p>
-
-# LoreBuddy
+<!-- markdownlint-restore -->
 
 > *Your Adventures. Our Stories.*
 
@@ -59,9 +61,11 @@ content.
 The initial addon target is documented in [TBC Anniversary Compatibility](docs/TBC_ANNIVERSARY_COMPATIBILITY.md).
 CurseForge-ready copy is maintained in [CurseForge Description](docs/CURSEFORGE_DESCRIPTION.md).
 
+<!-- markdownlint-disable MD033 -->
 <p align="center">
   <img src="assets/logo/lorebuddy-banner.png" alt="LoreBuddy: Your Adventures. Our Stories." width="439">
 </p>
+<!-- markdownlint-restore -->
 
 ## License
 
