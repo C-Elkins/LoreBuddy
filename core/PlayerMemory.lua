@@ -13,18 +13,24 @@ local categoryByType = {
     creature = "discoveredCharacters",
     location = "discoveredLocations",
     zone = "discoveredLocations",
-    dungeon = "discoveredLocations",
-    raid = "discoveredLocations",
     event = "discoveredEvents",
     faction = "discoveredFactions",
-    organization = "discoveredFactions"
+    organization = "discoveredFactions",
+    dungeon = "discoveredDungeons",
+    raid = "discoveredRaids",
+    book = "discoveredBooks",
+    item = "discoveredItems"
 }
 
 local labelByCategory = {
     discoveredCharacters = "character",
     discoveredLocations = "location",
     discoveredEvents = "event",
-    discoveredFactions = "faction"
+    discoveredFactions = "faction",
+    discoveredDungeons = "dungeon",
+    discoveredRaids = "raid",
+    discoveredBooks = "book",
+    discoveredItems = "item"
 }
 
 local function contains(list, value)
@@ -42,8 +48,23 @@ function PlayerMemory.new(state)
     state.discoveredLocations = state.discoveredLocations or {}
     state.discoveredEvents = state.discoveredEvents or {}
     state.discoveredFactions = state.discoveredFactions or {}
+    state.discoveredDungeons = state.discoveredDungeons or {}
+    state.discoveredRaids = state.discoveredRaids or {}
+    state.discoveredBooks = state.discoveredBooks or {}
+    state.discoveredItems = state.discoveredItems or {}
+    state.completedQuestChainIds = state.completedQuestChainIds or {}
     state.seenLore = state.seenLore or {}
     return setmetatable({ state = state }, PlayerMemory)
+end
+
+-- All discovery category keys, e.g. for a "lore book" view that lists
+-- everything the player has encountered across every category.
+function PlayerMemory.categories()
+    local list = {}
+    for category in pairs(labelByCategory) do
+        table.insert(list, category)
+    end
+    return list
 end
 
 function PlayerMemory:categoryFor(entityType)
@@ -87,6 +108,18 @@ function PlayerMemory:markLoreSeen(statementId)
         return false
     end
     table.insert(self.state.seenLore, statementId)
+    return true
+end
+
+function PlayerMemory:hasCompletedQuestChain(questChainId)
+    return contains(self.state.completedQuestChainIds, questChainId)
+end
+
+function PlayerMemory:markQuestChainCompleted(questChainId)
+    if self:hasCompletedQuestChain(questChainId) then
+        return false
+    end
+    table.insert(self.state.completedQuestChainIds, questChainId)
     return true
 end
 

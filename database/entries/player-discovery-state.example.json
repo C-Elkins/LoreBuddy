@@ -7,6 +7,12 @@
   "discoveredLocations": [],
   "discoveredEvents": [],
   "discoveredFactions": [],
+  "discoveredDungeons": [],
+  "discoveredRaids": [],
+  "discoveredBooks": [],
+  "discoveredItems": [],
+  "completedQuestChainIds": [],
   "seenLore": [],
+  "spoilerPreference": "moderate",
   "updatedAt": "2026-08-13T00:00:00Z"
 }

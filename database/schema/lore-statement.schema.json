@@ -8,12 +8,18 @@
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
     "entityId": { "type": "string" },
-    "detailLevel": { "type": "string", "enum": ["quick", "story", "deep"] },
+    "detailLevel": { "type": "string", "enum": ["micro", "quick", "story", "deep", "reference"] },
     "text": { "type": "string", "minLength": 1 },
     "canonStatus": { "type": "string", "enum": ["confirmed", "disputed", "non_canon", "unknown"] },
     "epistemicStatus": { "type": "string", "enum": ["fact", "interpretation", "theory", "speculation"] },
     "sourceIds": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
     "discoveryGateIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "spoilerLevel": {
+      "type": "string",
+      "enum": ["safe", "context", "reveal", "major_reveal", "ending"],
+      "default": "safe",
+      "description": "How spoiler-sensitive this statement is. Omit for content with no spoiler risk."
+    }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/coverage-plan-entry.schema.json",
+  "title": "LoreBuddy Coverage Plan Entry",
+  "description": "A planned entity for future research/authoring. This is a checklist item, not lore content. The coverage tool cross-references 'id' against actual dataset entities to compute Complete/Partial/Missing status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "category", "era"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": ["character", "faction", "zone", "dungeon", "raid", "location", "quest", "item", "book"]
+    },
+    "era": { "type": "string", "description": "References an era id in database/entries/eras.json." },
+    "priority": {
+      "type": "string",
+      "enum": ["p0", "p1", "p2", "p3", "p4"],
+      "default": "p2"
+    }
+  }
+}

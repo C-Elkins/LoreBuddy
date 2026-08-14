@@ -4,12 +4,25 @@ _G.LoreBuddyCore = LoreBuddyCore
 local RelationshipManager = {}
 RelationshipManager.__index = RelationshipManager
 
-local symmetricPredicates = {
+-- Fallback only: real symmetry data comes from GeneratedVocabulary (built
+-- from database/relationship-vocabulary.json's "directional" flag).
+local fallbackSymmetricPredicates = {
     related_to = true,
     allied_with = true,
     enemy_of = true,
-    associated_with = true
+    associated_with = true,
+    sibling_of = true,
+    loved = true,
+    opposes = true
 }
+
+local function isSymmetric(predicate)
+    local vocabulary = LoreBuddyCore.GeneratedVocabulary
+    if vocabulary and vocabulary[predicate] then
+        return vocabulary[predicate].directional == false
+    end
+    return fallbackSymmetricPredicates[predicate] == true
+end
 
 function RelationshipManager.new(relationships, entityManager)
     local manager = setmetatable({ relationships = relationships or {}, entityManager = entityManager }, RelationshipManager)
@@ -22,7 +35,7 @@ function RelationshipManager:connections(entityId, predicate)
         local isSubject = relationship.subjectId == entityId
         local isObject = relationship.objectId == entityId
         local matchesPredicate = not predicate or relationship.predicate == predicate
-        if matchesPredicate and (isSubject or (isObject and symmetricPredicates[relationship.predicate])) then
+        if matchesPredicate and (isSubject or (isObject and isSymmetric(relationship.predicate))) then
             local otherId = isSubject and relationship.objectId or relationship.subjectId
             table.insert(results, {
                 relationship = relationship,
@@ -38,7 +51,7 @@ end
 function RelationshipManager:between(subjectId, objectId, predicate)
     for _, relationship in ipairs(self.relationships) do
         local direct = relationship.subjectId == subjectId and relationship.objectId == objectId
-        local reverse = symmetricPredicates[relationship.predicate]
+        local reverse = isSymmetric(relationship.predicate)
             and relationship.subjectId == objectId
             and relationship.objectId == subjectId
         if (direct or reverse) and (not predicate or relationship.predicate == predicate) then

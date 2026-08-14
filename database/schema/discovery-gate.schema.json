@@ -10,6 +10,6 @@
     "label": { "type": "string", "minLength": 1 },
     "signalType": { "type": "string", "enum": ["quest", "event", "zone", "achievement", "encounter", "manual_confirmation"] },
     "signalId": { "type": "string" },
-    "minimumDetailLevel": { "type": "string", "enum": ["quick", "story", "deep"] }
+    "minimumDetailLevel": { "type": "string", "enum": ["micro", "quick", "story", "deep", "reference"] }
   }
 }

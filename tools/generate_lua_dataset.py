@@ -13,6 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ENTRIES_DIR = ROOT / "database" / "entries"
 DEFAULT_OUTPUT = ROOT / "core" / "GeneratedDataset.lua"
+DEFAULT_VOCABULARY_OUTPUT = ROOT / "core" / "GeneratedVocabulary.lua"
+VOCABULARY_PATH = ROOT / "database" / "relationship-vocabulary.json"
 MERGE_FIELDS = ("entities", "sources", "discoveryGates", "statements", "relationships")
 
 
@@ -68,6 +70,7 @@ def load_merged(paths):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Generate the Lua dataset for the addon")
     parser.add_argument("output", nargs="?", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--vocabulary-output", type=Path, default=DEFAULT_VOCABULARY_OUTPUT)
     args = parser.parse_args(argv)
 
     paths = sorted(ENTRIES_DIR.glob("*-dataset.json"))
@@ -79,6 +82,15 @@ def main(argv=None):
         handle.write("local LoreBuddyCore = _G.LoreBuddyCore or {}\n")
         handle.write("_G.LoreBuddyCore = LoreBuddyCore\n\n")
         handle.write("LoreBuddyCore.GeneratedDataset = " + to_lua(merged) + "\n")
+
+    with VOCABULARY_PATH.open(encoding="utf-8") as handle:
+        vocabulary = json.load(handle)["relationships"]
+    with args.vocabulary_output.open("w", encoding="utf-8") as handle:
+        handle.write("-- GENERATED FILE. Run tools/generate_lua_dataset.py to regenerate.\n")
+        handle.write("-- Source: database/relationship-vocabulary.json. Do not hand-edit.\n\n")
+        handle.write("local LoreBuddyCore = _G.LoreBuddyCore or {}\n")
+        handle.write("_G.LoreBuddyCore = LoreBuddyCore\n\n")
+        handle.write("LoreBuddyCore.GeneratedVocabulary = " + to_lua(vocabulary) + "\n")
 
     print(
         f"Wrote {args.output} "

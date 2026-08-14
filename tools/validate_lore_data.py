@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VOCABULARY_PATH = ROOT / "database" / "relationship-vocabulary.json"
+ERAS_PATH = ROOT / "database" / "entries" / "eras.json"
 ENTITY_TYPES = {
     "character", "location", "faction", "event", "item", "quest", "creature",
     "organization", "concept", "book", "dialogue", "dungeon", "raid", "zone",
@@ -18,11 +19,16 @@ SOURCE_KINDS = {
     "community_contribution",
 }
 SOURCE_CLASSIFICATIONS = {"primary", "secondary", "community", "speculation"}
+SOURCE_CONFIDENCE_LEVELS = {"confirmed", "strongly_supported", "uncertain", "conflicting", "speculation"}
 VERIFICATION_STATUSES = {"unverified", "reviewed", "verified"}
-DETAIL_LEVELS = {"quick", "story", "deep"}
+DETAIL_LEVELS = {"micro", "quick", "story", "deep", "reference"}
 CANON_STATUSES = {"confirmed", "disputed", "non_canon", "unknown"}
 EPISTEMIC_STATUSES = {"fact", "interpretation", "theory", "speculation"}
 SIGNAL_TYPES = {"quest", "event", "zone", "achievement", "encounter", "manual_confirmation"}
+LORE_RELEVANCE_LEVELS = {"core", "important", "supporting", "flavor", "comedic", "unknown"}
+PRIORITY_LEVELS = {"p0", "p1", "p2", "p3", "p4"}
+SPOILER_LEVELS = {"safe", "context", "reveal", "major_reveal", "ending"}
+SPOILER_PREFERENCES = {"no_spoilers", "context_only", "moderate", "full_lore", "show_everything"}
 
 # Sorted list variants for UI dropdowns and other ordered presentation needs.
 ENTITY_TYPES_LIST = sorted(ENTITY_TYPES)
@@ -38,6 +44,12 @@ SIGNAL_TYPES_LIST = sorted(SIGNAL_TYPES)
 def load_json(path):
     with path.open() as handle:
         return json.load(handle)
+
+
+def load_era_ids():
+    if not ERAS_PATH.exists():
+        return set()
+    return {era["id"] for era in load_json(ERAS_PATH).get("eras", []) if era.get("id")}
 
 
 def add_error(report, message):
@@ -76,10 +88,11 @@ def check_unique_ids(records, label, report, global_ids):
             global_ids.add(record_id)
 
 
-def validate_dataset(path, vocabulary, external_entity_ids=None, external_source_ids=None, external_gate_ids=None):
+def validate_dataset(path, vocabulary, external_entity_ids=None, external_source_ids=None, external_gate_ids=None, era_ids=None):
     external_entity_ids = external_entity_ids or set()
     external_source_ids = external_source_ids or set()
     external_gate_ids = external_gate_ids or set()
+    known_era_ids = era_ids or set()
     report = {
         "path": str(path),
         "counts": {"entities": 0, "relationships": 0, "sources": 0},
@@ -133,6 +146,12 @@ def validate_dataset(path, vocabulary, external_entity_ids=None, external_source
             require_string(entity.get(field), field, context, report)
         if entity.get("type") not in ENTITY_TYPES:
             add_error(report, f"{context}: invalid entity type '{entity.get('type')}'")
+        if entity.get("eraId") is not None and entity["eraId"] not in known_era_ids:
+            add_error(report, f"{context}: unknown eraId '{entity.get('eraId')}'")
+        if entity.get("loreRelevance") is not None and entity["loreRelevance"] not in LORE_RELEVANCE_LEVELS:
+            add_error(report, f"{context}: invalid loreRelevance '{entity.get('loreRelevance')}'")
+        if entity.get("priority") is not None and entity["priority"] not in PRIORITY_LEVELS:
+            add_error(report, f"{context}: invalid priority '{entity.get('priority')}'")
 
     for source in collections["sources"]:
         context = f"source {source.get('id', '<missing>')}"
@@ -144,6 +163,8 @@ def validate_dataset(path, vocabulary, external_entity_ids=None, external_source
             add_error(report, f"{context}: invalid source classification '{source.get('classification')}'")
         if source.get("verificationStatus") not in VERIFICATION_STATUSES:
             add_error(report, f"{context}: invalid verification status '{source.get('verificationStatus')}'")
+        if source.get("confidence") is not None and source["confidence"] not in SOURCE_CONFIDENCE_LEVELS:
+            add_error(report, f"{context}: invalid source confidence '{source.get('confidence')}'")
 
     for gate in collections["discoveryGates"]:
         context = f"discovery gate {gate.get('id', '<missing>')}"
@@ -158,6 +179,8 @@ def validate_dataset(path, vocabulary, external_entity_ids=None, external_source
         context = f"statement {statement.get('id', '<missing>')}"
         for field in ("id", "entityId", "detailLevel", "text", "canonStatus", "epistemicStatus"):
             require_string(statement.get(field), field, context, report)
+        if statement.get("spoilerLevel") is not None and statement["spoilerLevel"] not in SPOILER_LEVELS:
+            add_error(report, f"{context}: invalid spoilerLevel '{statement.get('spoilerLevel')}'")
         require_list(statement.get("sourceIds"), "sourceIds", context, report, minimum=1)
         entity_id = statement.get("entityId")
         if entity_id not in known_entity_ids:
@@ -282,8 +305,9 @@ def main(argv=None):
                     global_gate_ids.add(gate["id"])
 
         cross_file_errors = find_cross_file_duplicates(raw_datasets)
+        era_ids = load_era_ids()
         reports = [
-            validate_dataset(path, vocabulary, global_entity_ids, global_source_ids, global_gate_ids)
+            validate_dataset(path, vocabulary, global_entity_ids, global_source_ids, global_gate_ids, era_ids)
             for path, _ in raw_datasets
         ]
     except (OSError, json.JSONDecodeError, KeyError) as error:

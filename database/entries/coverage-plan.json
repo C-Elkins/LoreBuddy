@@ -1,0 +1,1229 @@
+{
+  "plan": [
+    {
+      "id": "eastern_kingdoms",
+      "name": "Eastern Kingdoms",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "kalimdor",
+      "name": "Kalimdor",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "elwynn_forest",
+      "name": "Elwynn Forest",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "westfall",
+      "name": "Westfall",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "redridge_mountains",
+      "name": "Redridge Mountains",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "duskwood",
+      "name": "Duskwood",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "stranglethorn_vale",
+      "name": "Stranglethorn Vale",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "loch_modan",
+      "name": "Loch Modan",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "dun_morogh",
+      "name": "Dun Morogh",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "wetlands",
+      "name": "Wetlands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "arathi_highlands",
+      "name": "Arathi Highlands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "hillsbrad_foothills",
+      "name": "Hillsbrad Foothills",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "the_hinterlands",
+      "name": "The Hinterlands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "silverpine_forest",
+      "name": "Silverpine Forest",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "tirisfal_glades",
+      "name": "Tirisfal Glades",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "western_plaguelands",
+      "name": "Western Plaguelands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "eastern_plaguelands",
+      "name": "Eastern Plaguelands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "burning_steppes",
+      "name": "Burning Steppes",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "searing_gorge",
+      "name": "Searing Gorge",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "badlands",
+      "name": "Badlands",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "swamp_of_sorrows",
+      "name": "Swamp of Sorrows",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "deadwind_pass",
+      "name": "Deadwind Pass",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "durotar",
+      "name": "Durotar",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "mulgore",
+      "name": "Mulgore",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "the_barrens",
+      "name": "The Barrens",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "ashenvale",
+      "name": "Ashenvale",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "darkshore",
+      "name": "Darkshore",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "thousand_needles",
+      "name": "Thousand Needles",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "stonetalon_mountains",
+      "name": "Stonetalon Mountains",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "desolace",
+      "name": "Desolace",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "feralas",
+      "name": "Feralas",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "dustwallow_marsh",
+      "name": "Dustwallow Marsh",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "tanaris",
+      "name": "Tanaris",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "un_goro_crater",
+      "name": "Un'Goro Crater",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "silithus",
+      "name": "Silithus",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "winterspring",
+      "name": "Winterspring",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "azshara",
+      "name": "Azshara",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "felwood",
+      "name": "Felwood",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "moonglade",
+      "name": "Moonglade",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "teldrassil",
+      "name": "Teldrassil",
+      "category": "zone",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "ragefire_chasm",
+      "name": "Ragefire Chasm",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "wailing_caverns",
+      "name": "Wailing Caverns",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "the_deadmines",
+      "name": "The Deadmines",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "shadowfang_keep",
+      "name": "Shadowfang Keep",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "blackfathom_deeps",
+      "name": "Blackfathom Deeps",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "the_stockade",
+      "name": "The Stockade",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "gnomeregan",
+      "name": "Gnomeregan",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "razorfen_kraul",
+      "name": "Razorfen Kraul",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "scarlet_monastery",
+      "name": "Scarlet Monastery",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "razorfen_downs",
+      "name": "Razorfen Downs",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "uldaman",
+      "name": "Uldaman",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "zul_farrak",
+      "name": "Zul'Farrak",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "maraudon",
+      "name": "Maraudon",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "temple_of_atal_hakkar",
+      "name": "Temple of Atal'Hakkar",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "blackrock_depths",
+      "name": "Blackrock Depths",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "lower_blackrock_spire",
+      "name": "Lower Blackrock Spire",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "upper_blackrock_spire",
+      "name": "Upper Blackrock Spire",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "dire_maul",
+      "name": "Dire Maul",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "scholomance",
+      "name": "Scholomance",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "stratholme",
+      "name": "Stratholme",
+      "category": "dungeon",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "molten_core",
+      "name": "Molten Core",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "onyxia_s_lair",
+      "name": "Onyxia's Lair",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "blackwing_lair",
+      "name": "Blackwing Lair",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "zul_gurub",
+      "name": "Zul'Gurub",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "ruins_of_ahn_qiraj",
+      "name": "Ruins of Ahn'Qiraj",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "temple_of_ahn_qiraj",
+      "name": "Temple of Ahn'Qiraj",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "naxxramas",
+      "name": "Naxxramas",
+      "category": "raid",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "the_horde",
+      "name": "Horde",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p0"
+    },
+    {
+      "id": "the_alliance",
+      "name": "Alliance",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p0"
+    },
+    {
+      "id": "argent_dawn",
+      "name": "Argent Dawn",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "cenarion_circle",
+      "name": "Cenarion Circle",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "thorium_brotherhood",
+      "name": "Thorium Brotherhood",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "gnomeregan_exiles",
+      "name": "Gnomeregan Exiles",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "darkmoon_faire",
+      "name": "Darkmoon Faire",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "steamwheedle_cartel",
+      "name": "Steamwheedle Cartel",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "booty_bay",
+      "name": "Booty Bay",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "gadgetzan",
+      "name": "Gadgetzan",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "everlook",
+      "name": "Everlook",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "ravenholdt",
+      "name": "Ravenholdt",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "scarlet_crusade",
+      "name": "Scarlet Crusade",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "scarlet_brotherhood",
+      "name": "Scarlet Brotherhood",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "brotherhood_of_the_light",
+      "name": "Brotherhood of the Light",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "defias_brotherhood",
+      "name": "Defias Brotherhood",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "twilight_s_hammer",
+      "name": "Twilight's Hammer",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "hydraxian_waterlords",
+      "name": "Hydraxian Waterlords",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "zandalar_tribe",
+      "name": "Zandalar Tribe",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "timbermaw_hold",
+      "name": "Timbermaw Hold",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "bloodsail_buccaneers",
+      "name": "Bloodsail Buccaneers",
+      "category": "faction",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "thrall",
+      "name": "Thrall",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p0"
+    },
+    {
+      "id": "jaina_proudmoore",
+      "name": "Jaina Proudmoore",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "cairne_bloodhoof",
+      "name": "Cairne Bloodhoof",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "vol_jin",
+      "name": "Vol'jin",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "sylvanas_windrunner",
+      "name": "Sylvanas Windrunner",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "tyrande_whisperwind",
+      "name": "Tyrande Whisperwind",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "malfurion_stormrage",
+      "name": "Malfurion Stormrage",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "varian_wrynn",
+      "name": "Varian Wrynn",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "anduin_wrynn",
+      "name": "Anduin Wrynn",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "arthas_menethil",
+      "name": "Arthas Menethil",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p0"
+    },
+    {
+      "id": "uther",
+      "name": "Uther",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "kel_thuzad",
+      "name": "Kel'Thuzad",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p1"
+    },
+    {
+      "id": "bolvar_fordragon",
+      "name": "Bolvar Fordragon",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "rexxar",
+      "name": "Rexxar",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "medivh",
+      "name": "Medivh",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "khadgar",
+      "name": "Khadgar",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "grommash_hellscream",
+      "name": "Grommash Hellscream",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "orgrim_doomhammer",
+      "name": "Orgrim Doomhammer",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "deathwing",
+      "name": "Deathwing",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "alexstrasza",
+      "name": "Alexstrasza",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "nozdormu",
+      "name": "Nozdormu",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "ysera",
+      "name": "Ysera",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "malygos",
+      "name": "Malygos",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "illidan_stormrage",
+      "name": "Illidan Stormrage",
+      "category": "character",
+      "era": "era_burning_crusade",
+      "priority": "p0"
+    },
+    {
+      "id": "maiev_shadowsong",
+      "name": "Maiev Shadowsong",
+      "category": "character",
+      "era": "era_classic",
+      "priority": "p2"
+    },
+    {
+      "id": "kaelthas_sunstrider",
+      "name": "Kael'thas Sunstrider",
+      "category": "character",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "lady_vashj",
+      "name": "Lady Vashj",
+      "category": "character",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "kil_jaeden",
+      "name": "Kil'jaeden",
+      "category": "character",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "hellfire_peninsula",
+      "name": "Hellfire Peninsula",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "zangarmarsh",
+      "name": "Zangarmarsh",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "terokkar_forest",
+      "name": "Terokkar Forest",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "nagrand",
+      "name": "Nagrand",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "blade_s_edge_mountains",
+      "name": "Blade's Edge Mountains",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "netherstorm",
+      "name": "Netherstorm",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "shadowmoon_valley",
+      "name": "Shadowmoon Valley",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "shattrath_city",
+      "name": "Shattrath City",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "azuremyst_isle",
+      "name": "Azuremyst Isle",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "bloodmyst_isle",
+      "name": "Bloodmyst Isle",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "eversong_woods",
+      "name": "Eversong Woods",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "ghostlands",
+      "name": "Ghostlands",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "silvermoon_city",
+      "name": "Silvermoon City",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "exodar",
+      "name": "Exodar",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "quel_thalas",
+      "name": "Quel'Thalas",
+      "category": "zone",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "aldor",
+      "name": "Aldor",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "scryers",
+      "name": "Scryers",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "sha_tar",
+      "name": "Sha'tar",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "cenarion_expedition",
+      "name": "Cenarion Expedition",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "lower_city",
+      "name": "Lower City",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "consortium",
+      "name": "Consortium",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "keepers_of_time",
+      "name": "Keepers of Time",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "honor_hold",
+      "name": "Honor Hold",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "thrallmar",
+      "name": "Thrallmar",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "mag_har",
+      "name": "Mag'har",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "netherwing",
+      "name": "Netherwing",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "sporeggar",
+      "name": "Sporeggar",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "violet_eye",
+      "name": "Violet Eye",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "ashtongue_deathsworn",
+      "name": "Ashtongue Deathsworn",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "scale_of_the_sands",
+      "name": "Scale of the Sands",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "ogri_la",
+      "name": "Ogri'la",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "kurenai",
+      "name": "Kurenai",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "halaa_alliance",
+      "name": "Halaa Alliance",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "halaa_horde",
+      "name": "Halaa Horde",
+      "category": "faction",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "hellfire_ramparts",
+      "name": "Hellfire Ramparts",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_blood_furnace",
+      "name": "The Blood Furnace",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_shattered_halls",
+      "name": "The Shattered Halls",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_slave_pens",
+      "name": "The Slave Pens",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_underbog",
+      "name": "The Underbog",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_steamvault",
+      "name": "The Steamvault",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "mana_tombs",
+      "name": "Mana-Tombs",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "auchenai_crypts",
+      "name": "Auchenai Crypts",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "sethekk_halls",
+      "name": "Sethekk Halls",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "shadow_labyrinth",
+      "name": "Shadow Labyrinth",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "old_hillsbrad_foothills",
+      "name": "Old Hillsbrad Foothills",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_black_morass",
+      "name": "The Black Morass",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_mechanar",
+      "name": "The Mechanar",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_botanica",
+      "name": "The Botanica",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "the_arcatraz",
+      "name": "The Arcatraz",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "magisters_terrace",
+      "name": "Magisters' Terrace",
+      "category": "dungeon",
+      "era": "era_burning_crusade",
+      "priority": "p2"
+    },
+    {
+      "id": "karazhan",
+      "name": "Karazhan",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "gruul_s_lair",
+      "name": "Gruul's Lair",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "magtheridon_s_lair",
+      "name": "Magtheridon's Lair",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "serpentshrine_cavern",
+      "name": "Serpentshrine Cavern",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "tempest_keep",
+      "name": "Tempest Keep",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "mount_hyjal",
+      "name": "Mount Hyjal",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "black_temple",
+      "name": "Black Temple",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "zul_aman",
+      "name": "Zul'Aman",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    },
+    {
+      "id": "sunwell_plateau",
+      "name": "Sunwell Plateau",
+      "category": "raid",
+      "era": "era_burning_crusade",
+      "priority": "p1"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eras": [
+    { "id": "era_ancient_foundational", "name": "Ancient / Foundational History", "order": 0, "summary": "Pre-War of the Ancients history: the Titans, the Well of Eternity, and the earliest civilizations." },
+    { "id": "era_war_of_the_ancients", "name": "War of the Ancients", "order": 1, "summary": "The night elves' war against the first Burning Legion invasion at the Well of Eternity." },
+    { "id": "era_first_war", "name": "First War", "order": 2, "summary": "The orc clans invade Azeroth through the Dark Portal." },
+    { "id": "era_second_war", "name": "Second War", "order": 3, "summary": "The Horde's assault on the human kingdoms; formation of the Alliance of Lordaeron." },
+    { "id": "era_third_war", "name": "Third War", "order": 4, "summary": "The Scourge invasion, the fall of Lordaeron, and the rise of Illidan and the Horde on Kalimdor." },
+    { "id": "era_fall_of_lordaeron", "name": "The Fall of Lordaeron", "order": 5, "summary": "Arthas's corruption and the destruction of his own kingdom." },
+    { "id": "era_frozen_throne", "name": "The Frozen Throne / Pre-WoW Transition", "order": 6, "summary": "Arthas becomes the Lich King; the aftermath that sets the stage for World of Warcraft." },
+    { "id": "era_classic", "name": "Vanilla World of Warcraft / Classic", "order": 7, "summary": "The original World of Warcraft era across Eastern Kingdoms and Kalimdor." },
+    { "id": "era_dark_portal_reopens", "name": "The Dark Portal Reopens", "order": 8, "summary": "Cho'gall reopens the Dark Portal, the world event bridging Classic and the Burning Crusade." },
+    { "id": "era_burning_crusade", "name": "The Burning Crusade / Outland", "order": 9, "summary": "The Burning Crusade expansion, centered on Outland and the Burning Legion." }
+  ]
+}

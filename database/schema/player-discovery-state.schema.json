@@ -14,7 +14,17 @@
     "discoveredLocations": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "discoveredEvents": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "discoveredFactions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredDungeons": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredRaids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredBooks": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredItems": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "completedQuestChainIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "seenLore": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "spoilerPreference": {
+      "type": "string",
+      "enum": ["no_spoilers", "context_only", "moderate", "full_lore", "show_everything"],
+      "default": "moderate"
+    },
     "updatedAt": { "type": "string", "format": "date-time" }
   }
 }

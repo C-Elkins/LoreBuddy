@@ -15,6 +15,29 @@
     "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "summary": { "type": "string", "minLength": 1 },
     "gameVersions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-    "status": { "type": "string", "enum": ["active", "retired", "draft"] }
+    "status": { "type": "string", "enum": ["active", "retired", "draft"] },
+    "eraId": { "type": "string", "description": "References an era in database/entries/eras.json, or omit if not yet classified." },
+    "loreRelevance": {
+      "type": "string",
+      "enum": ["core", "important", "supporting", "flavor", "comedic", "unknown"],
+      "description": "How central this entity is to the major story. Defaults to 'unknown' when omitted."
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["p0", "p1", "p2", "p3", "p4"],
+      "description": "Authoring priority: p0 essential, p4 flavor/completionist. Guides what to research next, not runtime behavior."
+    },
+    "chronology": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional chronological metadata. Never fabricate dates; use 'unknown' when unclear.",
+      "properties": {
+        "absolute": { "type": "string", "default": "unknown" },
+        "relative": { "type": "string", "default": "unknown" },
+        "beforeEventIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "afterEventIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "notes": { "type": "string" }
+      }
+    }
   }
 }

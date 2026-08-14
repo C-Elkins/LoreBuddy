@@ -15,11 +15,24 @@ local sourceKinds = {
 }
 
 local sourceClassifications = { primary = true, secondary = true, community = true, speculation = true }
-local relationshipPredicates = {
+
+-- Fallback only: if core/GeneratedVocabulary.lua hasn't been generated yet
+-- (e.g. a fresh checkout before running tools/generate_lua_dataset.py), fall
+-- back to this superset so validation still works. The vocabulary itself
+-- lives in database/relationship-vocabulary.json and is data, not code.
+local fallbackRelationshipPredicates = {
     related_to = true, located_at = true, allied_with = true, participated_in = true,
     enemy_of = true, member_of = true, parent_of = true, created = true,
-    contains = true, appears_in = true, associated_with = true
+    contains = true, appears_in = true, associated_with = true, sibling_of = true,
+    loved = true, rules = true, led_by = true, part_of = true, opposes = true, supports = true
 }
+
+local function relationshipPredicates()
+    if LoreBuddyCore.GeneratedVocabulary then
+        return LoreBuddyCore.GeneratedVocabulary
+    end
+    return fallbackRelationshipPredicates
+end
 
 local function addError(errors, message)
     table.insert(errors, message)
@@ -101,7 +114,7 @@ function ValidationEngine.validate(dataset)
             referencedEntityIds[relationship.subjectId] = true
             referencedEntityIds[relationship.objectId] = true
         end
-        if not relationshipPredicates[relationship.predicate] then addError(errors, context .. " has invalid relationship") end
+        if not relationshipPredicates()[relationship.predicate] then addError(errors, context .. " has invalid relationship") end
         if not relationship.sourceIds or #relationship.sourceIds == 0 then addError(errors, context .. " has missing sources") end
         for _, sourceId in ipairs(relationship.sourceIds or {}) do
             if not sourceIds[sourceId] then addError(errors, context .. " has broken source reference") end

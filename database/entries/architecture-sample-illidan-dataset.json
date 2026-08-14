@@ -1,0 +1,311 @@
+{
+  "_comment": "ARCHITECTURE SAMPLE ONLY. Placeholder content proving the schema (eras, chronology, loreRelevance, priority, spoilerLevel, source confidence/retcons, expanded relationship vocabulary). Not real lore. IDs are prefixed 'sample_' so they never collide with the real illidan-vertical-slice-dataset.json.",
+  "datasetVersion": 1,
+  "entities": [
+    {
+      "id": "sample_illidan_stormrage",
+      "name": "[Sample] Illidan Stormrage",
+      "type": "character",
+      "aliases": ["[Sample] The Betrayer"],
+      "summary": "Placeholder summary sentence for architecture testing.",
+      "gameVersions": ["classic", "tbc"],
+      "status": "draft",
+      "eraId": "era_burning_crusade",
+      "loreRelevance": "core",
+      "priority": "p0",
+      "chronology": {
+        "absolute": "unknown",
+        "relative": "Imprisoned during the War of the Ancients; released during the Third War.",
+        "beforeEventIds": ["sample_war_of_the_ancients"],
+        "afterEventIds": ["sample_fall_of_the_black_temple"],
+        "notes": "Placeholder chronology notes."
+      }
+    },
+    {
+      "id": "sample_malfurion_stormrage",
+      "name": "[Sample] Malfurion Stormrage",
+      "type": "character",
+      "summary": "Placeholder summary sentence for architecture testing.",
+      "gameVersions": ["classic"],
+      "status": "draft",
+      "eraId": "era_war_of_the_ancients",
+      "loreRelevance": "important",
+      "priority": "p1"
+    },
+    {
+      "id": "sample_the_illidari",
+      "name": "[Sample] The Illidari",
+      "type": "organization",
+      "summary": "Placeholder faction summary for architecture testing.",
+      "gameVersions": ["tbc"],
+      "status": "draft",
+      "eraId": "era_burning_crusade",
+      "loreRelevance": "important",
+      "priority": "p1"
+    },
+    {
+      "id": "sample_black_temple",
+      "name": "[Sample] Black Temple",
+      "type": "raid",
+      "summary": "Placeholder location summary for architecture testing.",
+      "gameVersions": ["tbc"],
+      "status": "draft",
+      "eraId": "era_burning_crusade",
+      "loreRelevance": "core",
+      "priority": "p1"
+    },
+    {
+      "id": "sample_war_of_the_ancients",
+      "name": "[Sample] War of the Ancients",
+      "type": "event",
+      "summary": "Placeholder event summary for architecture testing.",
+      "gameVersions": ["classic"],
+      "status": "draft",
+      "eraId": "era_war_of_the_ancients",
+      "loreRelevance": "important",
+      "priority": "p2",
+      "chronology": {
+        "absolute": "unknown",
+        "relative": "Long before the First War.",
+        "notes": "Placeholder; exact date intentionally left unknown, per policy of never fabricating dates."
+      }
+    },
+    {
+      "id": "sample_fall_of_the_black_temple",
+      "name": "[Sample] Fall of the Black Temple",
+      "type": "event",
+      "summary": "Placeholder event summary for architecture testing.",
+      "gameVersions": ["tbc"],
+      "status": "draft",
+      "eraId": "era_burning_crusade",
+      "loreRelevance": "core",
+      "priority": "p1",
+      "chronology": {
+        "absolute": "unknown",
+        "relative": "During the Burning Crusade.",
+        "beforeEventIds": [],
+        "afterEventIds": []
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "sample_src_placeholder_primary",
+      "publisher": "[Sample] Blizzard Entertainment",
+      "title": "[Sample] Placeholder primary source",
+      "kind": "blizzard_api",
+      "classification": "primary",
+      "reference": "placeholder-reference-only",
+      "attribution": "[Sample] Blizzard Entertainment",
+      "license": "Placeholder; do not reuse",
+      "verificationStatus": "unverified",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "sample_src_placeholder_secondary",
+      "publisher": "[Sample] Community Wiki",
+      "title": "[Sample] Placeholder secondary source",
+      "kind": "external_reference",
+      "classification": "secondary",
+      "reference": "placeholder-reference-only",
+      "attribution": "[Sample] Community Wiki contributors",
+      "license": "Placeholder; do not reuse",
+      "verificationStatus": "unverified",
+      "confidence": "strongly_supported"
+    },
+    {
+      "id": "sample_src_conflicting_retcon",
+      "publisher": "[Sample] Older Sourcebook",
+      "title": "[Sample] Placeholder source demonstrating a documented retcon",
+      "kind": "book",
+      "classification": "secondary",
+      "reference": "placeholder-reference-only",
+      "attribution": "[Sample] Older Sourcebook authors",
+      "license": "Placeholder; do not reuse",
+      "verificationStatus": "reviewed",
+      "confidence": "conflicting",
+      "retconNotes": "Placeholder: this source's account was later superseded by a newer, more authoritative source. Both are kept on file rather than silently overwritten; see the statement's canonStatus and epistemicStatus."
+    }
+  ],
+  "discoveryGates": [
+    {
+      "id": "sample_gate_black_temple_defeated",
+      "label": "[Sample] The player has defeated the sample raid boss",
+      "signalType": "encounter",
+      "minimumDetailLevel": "deep"
+    }
+  ],
+  "statements": [
+    {
+      "id": "sample_illidan_stormrage_quick",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "quick",
+      "text": "[Sample placeholder] One-sentence quick summary.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    },
+    {
+      "id": "sample_illidan_stormrage_story",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "story",
+      "text": "[Sample placeholder] A short paragraph of background context, safe to show without spoiling anything.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary", "sample_src_placeholder_secondary"],
+      "spoilerLevel": "context"
+    },
+    {
+      "id": "sample_illidan_stormrage_deep",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "deep",
+      "text": "[Sample placeholder] Deep-dive text revealing how the storyline concludes. Gated behind both a discovery gate and the ending spoiler level.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "discoveryGateIds": ["sample_gate_black_temple_defeated"],
+      "spoilerLevel": "ending"
+    },
+    {
+      "id": "sample_illidan_stormrage_reference",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "reference",
+      "text": "[Sample placeholder] Structured factual reference: Race: Night elf (demon). First appearance: Warcraft III. Notable titles: The Betrayer, Lord of Outland.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    },
+    {
+      "id": "sample_illidan_stormrage_micro",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "micro",
+      "text": "[Sample placeholder] One-sentence micro summary.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    },
+    {
+      "id": "sample_illidan_stormrage_disputed_motive",
+      "entityId": "sample_illidan_stormrage",
+      "detailLevel": "deep",
+      "text": "[Sample placeholder] Demonstrates a documented retcon: an older source's account of motive conflicts with a newer, more authoritative account.",
+      "canonStatus": "disputed",
+      "epistemicStatus": "interpretation",
+      "sourceIds": ["sample_src_conflicting_retcon", "sample_src_placeholder_secondary"],
+      "spoilerLevel": "major_reveal"
+    },
+    {
+      "id": "sample_malfurion_stormrage_quick",
+      "entityId": "sample_malfurion_stormrage",
+      "detailLevel": "quick",
+      "text": "[Sample placeholder] One-sentence quick summary.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    },
+    {
+      "id": "sample_black_temple_quick",
+      "entityId": "sample_black_temple",
+      "detailLevel": "quick",
+      "text": "[Sample placeholder] One-sentence quick summary.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    },
+    {
+      "id": "sample_war_of_the_ancients_quick",
+      "entityId": "sample_war_of_the_ancients",
+      "detailLevel": "quick",
+      "text": "[Sample placeholder] One-sentence quick summary.",
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "spoilerLevel": "safe"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "sample_illidan_sibling_of_malfurion",
+      "subjectId": "sample_illidan_stormrage",
+      "predicate": "sibling_of",
+      "objectId": "sample_malfurion_stormrage",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "context": "Placeholder: demonstrates the new sibling_of predicate."
+    },
+    {
+      "id": "sample_illidan_rules_black_temple",
+      "subjectId": "sample_illidan_stormrage",
+      "predicate": "rules",
+      "objectId": "sample_black_temple",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "context": "Placeholder: demonstrates the new rules predicate."
+    },
+    {
+      "id": "sample_illidari_led_by_illidan",
+      "subjectId": "sample_the_illidari",
+      "predicate": "led_by",
+      "objectId": "sample_illidan_stormrage",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "context": "Placeholder: demonstrates the new led_by predicate."
+    },
+    {
+      "id": "sample_illidari_part_of_black_temple",
+      "subjectId": "sample_the_illidari",
+      "predicate": "part_of",
+      "objectId": "sample_black_temple",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact",
+      "context": "Placeholder: demonstrates the new part_of predicate."
+    },
+    {
+      "id": "sample_illidan_opposes_malfurion",
+      "subjectId": "sample_illidan_stormrage",
+      "predicate": "opposes",
+      "objectId": "sample_malfurion_stormrage",
+      "sourceIds": ["sample_src_placeholder_secondary"],
+      "canonStatus": "disputed",
+      "epistemicStatus": "interpretation",
+      "context": "Placeholder: demonstrates the new opposes predicate."
+    },
+    {
+      "id": "sample_illidan_participated_in_war_of_the_ancients",
+      "subjectId": "sample_illidan_stormrage",
+      "predicate": "participated_in",
+      "objectId": "sample_war_of_the_ancients",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact"
+    },
+    {
+      "id": "sample_illidan_participated_in_fall_of_the_black_temple",
+      "subjectId": "sample_illidan_stormrage",
+      "predicate": "participated_in",
+      "objectId": "sample_fall_of_the_black_temple",
+      "sourceIds": ["sample_src_placeholder_primary"],
+      "canonStatus": "confirmed",
+      "epistemicStatus": "fact"
+    },
+    {
+      "id": "sample_malfurion_supports_the_illidari",
+      "subjectId": "sample_malfurion_stormrage",
+      "predicate": "supports",
+      "objectId": "sample_the_illidari",
+      "sourceIds": ["sample_src_placeholder_secondary"],
+      "canonStatus": "unknown",
+      "epistemicStatus": "speculation",
+      "context": "Placeholder: demonstrates the new supports predicate and a speculation-classified fact."
+    }
+  ]
+}

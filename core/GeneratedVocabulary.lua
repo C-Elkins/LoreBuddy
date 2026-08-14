@@ -1,0 +1,80 @@
+-- GENERATED FILE. Run tools/generate_lua_dataset.py to regenerate.
+-- Source: database/relationship-vocabulary.json. Do not hand-edit.
+
+local LoreBuddyCore = _G.LoreBuddyCore or {}
+_G.LoreBuddyCore = LoreBuddyCore
+
+LoreBuddyCore.GeneratedVocabulary = {
+  ["related_to"] = {
+    ["directional"] = false,
+    ["description"] = "A broad contextual association.",
+  },
+  ["located_at"] = {
+    ["directional"] = true,
+    ["description"] = "Subject is located at object. Also covers 'located in'.",
+  },
+  ["allied_with"] = {
+    ["directional"] = false,
+    ["description"] = "Subject and object are allies.",
+  },
+  ["participated_in"] = {
+    ["directional"] = true,
+    ["description"] = "Subject participated in object.",
+  },
+  ["enemy_of"] = {
+    ["directional"] = false,
+    ["description"] = "Subject and object are enemies.",
+  },
+  ["member_of"] = {
+    ["directional"] = true,
+    ["description"] = "Subject belongs to object.",
+  },
+  ["parent_of"] = {
+    ["directional"] = true,
+    ["description"] = "Subject is a parent or predecessor of object.",
+  },
+  ["created"] = {
+    ["directional"] = true,
+    ["description"] = "Subject created object.",
+  },
+  ["contains"] = {
+    ["directional"] = true,
+    ["description"] = "Subject contains object.",
+  },
+  ["appears_in"] = {
+    ["directional"] = true,
+    ["description"] = "Subject appears in object.",
+  },
+  ["associated_with"] = {
+    ["directional"] = false,
+    ["description"] = "Subject has an explicit association with object. Also covers 'connected to'.",
+  },
+  ["sibling_of"] = {
+    ["directional"] = false,
+    ["description"] = "Subject and object are siblings (e.g. brother/sister of).",
+  },
+  ["loved"] = {
+    ["directional"] = false,
+    ["description"] = "Subject and object share a romantic history.",
+  },
+  ["rules"] = {
+    ["directional"] = true,
+    ["description"] = "Subject rules or governs object.",
+  },
+  ["led_by"] = {
+    ["directional"] = true,
+    ["description"] = "Subject (a group) is led by object. Also covers 'leads' in the reverse direction.",
+  },
+  ["part_of"] = {
+    ["directional"] = true,
+    ["description"] = "Subject is a constituent part of object (finer-grained than member_of).",
+  },
+  ["opposes"] = {
+    ["directional"] = false,
+    ["description"] = "Subject and object are in ideological or political opposition, short of open war.",
+  },
+  ["supports"] = {
+    ["directional"] = true,
+    ["description"] = "Subject backs or supports object without necessarily being a full ally.",
+  },
+}

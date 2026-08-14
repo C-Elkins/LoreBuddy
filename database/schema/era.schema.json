@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorebuddy.dev/schema/era.schema.json",
+  "title": "LoreBuddy Era",
+  "description": "A chronological era used to group and order lore. Eras are data, not code, so new eras (Wrath, Cataclysm, and beyond) can be added without changing the engine.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "order"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "order": { "type": "integer", "minimum": 0, "description": "Sort order; lower is earlier. Not a literal year." },
+    "summary": { "type": "string", "minLength": 1 }
+  }
+}

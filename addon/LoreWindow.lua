@@ -183,7 +183,9 @@ function LoreWindow:showLoreBook()
     self.results = {}
     local seen = {}
     local memoryState = self.engine.memory.state
-    for _, category in ipairs({ "discoveredCharacters", "discoveredLocations", "discoveredEvents", "discoveredFactions" }) do
+    for _, category in ipairs(self.engine.memory.categories and self.engine.memory.categories() or {
+        "discoveredCharacters", "discoveredLocations", "discoveredEvents", "discoveredFactions"
+    }) do
         for _, entityId in ipairs(memoryState[category] or {}) do
             if not seen[entityId] then
                 seen[entityId] = true

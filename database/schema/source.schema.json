@@ -19,6 +19,15 @@
     "retrievedAt": { "type": "string", "format": "date-time" },
     "attribution": { "type": "string", "minLength": 1 },
     "license": { "type": "string", "minLength": 1 },
-    "verificationStatus": { "type": "string", "enum": ["unverified", "reviewed", "verified"] }
+    "verificationStatus": { "type": "string", "enum": ["unverified", "reviewed", "verified"] },
+    "confidence": {
+      "type": "string",
+      "enum": ["confirmed", "strongly_supported", "uncertain", "conflicting", "speculation"],
+      "description": "How reliable this specific source is, independent of its primary/secondary classification."
+    },
+    "retconNotes": {
+      "type": "string",
+      "description": "Explains a known contradiction or retcon this source is involved in. Never silently overwrite conflicting lore; document it here instead."
+    }
   }
 }

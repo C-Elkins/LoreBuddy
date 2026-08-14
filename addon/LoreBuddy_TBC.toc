@@ -20,6 +20,7 @@ core/ContextEngine.lua
 core/ValidationEngine.lua
 core/LoreEngine.lua
 core/GeneratedDataset.lua
+core/GeneratedVocabulary.lua
 addon/ContextCollector.lua
 addon/DiscoverySignalAdapter.lua
 addon/EventRouter.lua
