@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="assets/logo/lorebuddy-banner.png" alt="LoreBuddy: Your Adventures. Our Stories." width="439">
-</p>
-
-<p align="center">
+<p align="right">
   <img src="assets/logo/lorebuddy-portrait.png" alt="LoreBuddy orc reading a lore book" width="300">
 </p>
 
@@ -62,6 +58,10 @@ Run `./LoreBuddy validate` to check the database before adding or packaging
 content.
 The initial addon target is documented in [TBC Anniversary Compatibility](docs/TBC_ANNIVERSARY_COMPATIBILITY.md).
 CurseForge-ready copy is maintained in [CurseForge Description](docs/CURSEFORGE_DESCRIPTION.md).
+
+<p align="center">
+  <img src="assets/logo/lorebuddy-banner.png" alt="LoreBuddy: Your Adventures. Our Stories." width="439">
+</p>
 
 ## License
 
