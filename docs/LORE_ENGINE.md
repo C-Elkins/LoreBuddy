@@ -14,6 +14,8 @@ require an internet connection, invoke AI, or author canonical lore.
 - `ContextEngine`: contextual statement retrieval from zone, NPC, quest, event,
   location, entity, and tag context.
 - `DiscoveryManager`: local gates, seen statements, and spoiler visibility.
+- `PlayerMemory`: per-character memory of encountered characters, locations,
+  events, and factions, and which lore has been seen.
 - `ValidationEngine`: runtime reference checks before the engine is constructed.
 
 ## Public Queries
@@ -30,6 +32,8 @@ local connections = engine:findConnections("Illidan")
 local contextualLore = engine:findRelevantLore({ zoneId = "shadowmoon_valley" })
 local akamaLore = engine:findRelevantLore({ npcId = "akama" })
 local discovered = engine:hasPlayerDiscovered("Illidan")
+local encounter = engine:rememberEntity("illidan_stormrage")
+-- encounter.message is "You've encountered this character before." on repeat visits.
 ```
 
 Results include the entity, statement or relationship, and source records where

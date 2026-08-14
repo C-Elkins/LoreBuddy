@@ -14,6 +14,7 @@ function LoreEngine.new(dataset, discoveryState)
     engine.relationships = LoreBuddyCore.RelationshipManager.new(dataset.relationships, engine.entities)
     engine.search = LoreBuddyCore.SearchEngine.new(engine.entities, dataset.statements, engine.sources, engine.discovery)
     engine.context = LoreBuddyCore.ContextEngine.new(engine.entities, dataset.statements, engine.sources, engine.discovery)
+    engine.memory = LoreBuddyCore.PlayerMemory.new(discoveryState)
     return engine
 end
 
@@ -49,6 +50,28 @@ function LoreEngine:hasPlayerDiscovered(query)
         end
     end
     return false
+end
+
+-- Records the entity as encountered and returns an encounter summary,
+-- including a "you've encountered this before" message when applicable.
+function LoreEngine:rememberEntity(entityId)
+    local entity = self.entities:get(entityId)
+    if not entity then
+        return nil
+    end
+    local recorded, alreadyKnown = self.memory:remember(entity)
+    if not recorded then
+        return nil
+    end
+    local message
+    if alreadyKnown then
+        message = string.format("You've encountered this %s before.", self.memory:labelFor(entity.type))
+    end
+    return { entity = entity, alreadyKnown = alreadyKnown, message = message }
+end
+
+function LoreEngine:hasPlayerEncountered(entityId)
+    return self.memory:hasEncountered(entityId)
 end
 
 LoreBuddyCore.LoreEngine = LoreEngine

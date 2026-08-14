@@ -10,6 +10,11 @@
     "discoveredGateIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "seenStatementIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "dismissedHintIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredCharacters": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredLocations": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredEvents": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "discoveredFactions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "seenLore": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "updatedAt": { "type": "string", "format": "date-time" }
   }
 }

@@ -14,6 +14,7 @@ core/EntityManager.lua
 core/RelationshipManager.lua
 core/SourceManager.lua
 core/DiscoveryManager.lua
+core/PlayerMemory.lua
 core/SearchEngine.lua
 core/ContextEngine.lua
 core/ValidationEngine.lua

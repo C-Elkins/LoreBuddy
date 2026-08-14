@@ -65,6 +65,12 @@ Player discovery state is local and separate from packaged lore. It may be
 absent, reset, or incomplete without invalidating the canonical dataset. The
 core addon must use local packaged data when no network is available.
 
+Player memory tracks which characters, locations, events, and factions a
+player has already encountered (`discoveredCharacters`, `discoveredLocations`,
+`discoveredEvents`, `discoveredFactions`) plus which statements they have seen
+(`seenLore`). It powers messages such as "You've encountered this character
+before." and lives in the same per-character save data as discovery gates.
+
 ## Validation
 
 Run the offline validator from the repository root:

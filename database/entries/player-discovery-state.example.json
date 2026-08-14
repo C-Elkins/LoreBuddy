@@ -3,5 +3,10 @@
   "discoveredGateIds": ["fixture_waypoint_discovered"],
   "seenStatementIds": ["example_wayfinder_quick_fact"],
   "dismissedHintIds": [],
+  "discoveredCharacters": ["illidan_stormrage", "akama", "kaelthas_sunstrider"],
+  "discoveredLocations": [],
+  "discoveredEvents": [],
+  "discoveredFactions": [],
+  "seenLore": [],
   "updatedAt": "2026-08-13T00:00:00Z"
 }
